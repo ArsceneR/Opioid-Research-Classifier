@@ -6,12 +6,13 @@ from typing import List
 
 def copy_random_images_with_captions(source_dir_path: str, n: int, destination_dir_path: str) -> List[str]:
     """Select up to n random images (and their caption files if present) from source and copy each into
-    a new numbered subfolder under destination (1,2,3,...). Returns list of created folder paths.
+    a new subfolder under destination, using the same folder name as the original. Returns list of created folder paths.
 
     - Images and captions are expected to live in the same folder in `source_dir_path`.
     - Captions are any files that share the image filename stem (filename without extension). Multiple
       caption extensions are supported (.txt, .json, .xz, ...).
     - .xz caption files are copied as-is; no decompression occurs.
+    - If multiple images are selected from the same source folder, later copies will overwrite earlier ones.
     """
     source_dir = os.path.abspath(os.path.expanduser(source_dir_path))
     dest_dir = os.path.abspath(os.path.expanduser(destination_dir_path))
@@ -41,8 +42,20 @@ def copy_random_images_with_captions(source_dir_path: str, n: int, destination_d
 
     created_folders: List[str] = []
 
-    for idx, src_image in enumerate(selected, start=1):
-        folder_name = str(idx)
+    for src_image in selected:
+        # Get the relative path from source_dir to the image's parent folder
+        src_image_dir = os.path.dirname(src_image)
+        rel_path = os.path.relpath(src_image_dir, source_dir)
+        
+        # Use the folder name (or relative path if nested)
+        # If image is directly in source_dir, use a default name or the image's stem
+        if rel_path == '.':
+            # Image is directly in source_dir, use image stem as folder name
+            folder_name = os.path.splitext(os.path.basename(src_image))[0]
+        else:
+            # Use the relative path, but if it's nested, use just the immediate folder name
+            folder_name = os.path.basename(rel_path)
+        
         target_folder = os.path.join(dest_dir, folder_name)
         
         if os.path.exists(target_folder):
