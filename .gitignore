@@ -25,5 +25,5 @@ ConversationStreamDistribution/
 
 service_account.json
 
-
+*.csv
 Opioid_Related*/
