@@ -1,0 +1,29 @@
+# Ignore the directory where downloaded files are stored
+my_files/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore virtual environment
+venv/
+.env
+
+# Ignore system files
+.DS_Store
+
+# Ignore dataset files
+ConversationStreamDistribution/
+
+#ignore downloaded files with specific extensions
+*.txt
+*jpg
+*.jpg*
+*.xz
+*.mp4 
+
+service_account.json
+
+
+Opioid_Related*/
