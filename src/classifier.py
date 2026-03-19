@@ -199,9 +199,8 @@ class Classifier:
                 "fentanyl pills",
                 "oxycodone pills",
                 "opioid overdose",
-                "drugs",
                 "prescription opioid abuse",
-                "illegal opioid sales", 
+                "illegal opioid sales",
                 "opioid manufacturing",
                 "counterfeit pills",
                 "opioid crisis",
@@ -216,22 +215,11 @@ class Classifier:
                 "opioid trafficking",
                 "pill press",
                 "substance-induced fatality",
-                "prescription medication",
-                "pharmaceutical pills",
                 "drug paraphernalia",
-                "pill bottles",
-                "medicine capsules",
                 "syringes",
                 "drug injection",
                 "controlled substance",
                 "painkillers",
-                "analgesics",
-                "medication storage",
-                "prescription refills",
-                "pharmacy",
-                "doctor's prescription",
-                "medicine cabinet",
-                "first aid kit",
                 "addiction recovery",
                 "rehabilitation center",
                 "sobriety support",
@@ -252,7 +240,6 @@ class Classifier:
                 "support groups",
                 "detoxification",
                 "intervention",
-                "pill"  
             ],
 
             "neutral_content": [
@@ -334,8 +321,8 @@ class Classifier:
         logger.info(f"Using device: {self.device}")
         try:
 
-            self.model, self.preprocess = clip.load("ViT-B/32", device=self.device) 
-            logger.info("CLIP model ViT-B/32 loaded.")
+            self.model, self.preprocess = clip.load("ViT-L/14", device=self.device)
+            logger.info("CLIP model ViT-L/14 loaded.")
         except Exception as e:
             logger.exception("Failed to load CLIP model!")
             raise  # Critical error, stop container initialization
@@ -521,10 +508,9 @@ class Classifier:
                 # Find indices of prompts belonging to this category
                 category_indices = [i for i, cat in enumerate(self.PROMPT_TO_CATEGORY_MAP) if cat == category]
                 if category_indices:
-                    # Use max pooling: take the maximum logit for this category
-                    # Convert list to tensor for indexing
+                    # Use mean pooling: average logits across all prompts for this category
                     indices_tensor = torch.tensor(category_indices, device=self.device)
-                    category_logit = logits[indices_tensor].max()
+                    category_logit = logits[indices_tensor].mean()
                     category_logits_list.append(category_logit)
                 else:
                     # Should not happen, but handle gracefully
