@@ -18,7 +18,7 @@ ConversationStreamDistribution/
 
 #ignore downloaded files with specific extensions
 *.txt
-*jpg
+*.jpg
 *.jpg*
 *.xz
 *.mp4 
@@ -30,3 +30,5 @@ service_account.json
 
 *.csv
 Opioid_Related*/
+
+*.xlsx
