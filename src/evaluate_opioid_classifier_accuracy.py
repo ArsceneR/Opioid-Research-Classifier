@@ -104,14 +104,14 @@ def main():
 
     # Print results to console
     print(f"\n{'='*50}")
-    print(f"  CONFUSION MATRIX")
+    print("  CONFUSION MATRIX")
     print(f"{'='*50}")
-    print(f"                    Predicted")
-    print(f"                  Opioid  Neutral")
+    print("                    Predicted")
+    print("                  Opioid  Neutral")
     print(f"  Actual Opioid   {tp:>5}    {fn:>5}")
     print(f"  Actual Neutral  {fp:>5}    {tn:>5}")
     print(f"{'='*50}")
-    print(f"  METRICS")
+    print("  METRICS")
     print(f"{'='*50}")
     print(f"  Accuracy:    {accuracy:.2%}  ({tp+tn}/{tp+fp+tn+fn})")
     print(f"  Precision:   {precision:.2%}  ({tp}/{tp+fp} predicted opioid are correct)")
@@ -121,12 +121,12 @@ def main():
     print(f"{'='*50}")
 
     if fp_ids:
-        print(f"\n  False Positives (classifier=opioid, human=neutral):")
+        print("\n  False Positives (classifier=opioid, human=neutral):")
         for pid in sorted(fp_ids):
             print(f"    - {pid}")
 
     if fn_ids:
-        print(f"\n  False Negatives (classifier=neutral, human=opioid):")
+        print("\n  False Negatives (classifier=neutral, human=opioid):")
         for pid in sorted(fn_ids):
             print(f"    - {pid}")
 

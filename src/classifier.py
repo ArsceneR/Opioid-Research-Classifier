@@ -131,7 +131,6 @@ def create_drive_folder(service, folder_name, parent_folder_id=None):
 
 def upload_to_drive(service, folder_id, file_path):
     from googleapiclient.http import MediaFileUpload
-    from googleapiclient.errors import HttpError
     import mimetypes # Use standard library for mime types
 
     file_name = file_path.name
@@ -331,7 +330,7 @@ class Classifier:
 
             self.model, self.preprocess = clip.load("ViT-L/14", device=self.device)
             logger.info("CLIP model ViT-L/14 loaded.")
-        except Exception as e:
+        except Exception:
             logger.exception("Failed to load CLIP model!")
             raise  # Critical error, stop container initialization
 
@@ -365,7 +364,7 @@ class Classifier:
                 # Normalize text features once for efficient comparison later
                 self.text_features /= self.text_features.norm(dim=-1, keepdim=True)
             logger.info(f"Encoded {len(self.ALL_PROMPTS)} text prompts.")
-        except Exception as e:
+        except Exception:
              logger.exception("Failed to encode text prompts!")
              raise # Critical error
 
@@ -378,7 +377,7 @@ class Classifier:
                 device=0 if self.device == "cuda" else -1
             )
             logger.info(f"Zero-shot text classifier '{self.text_classifier_model}' loaded.")
-        except Exception as e:
+        except Exception:
             logger.exception(f"Failed to load text classifier '{self.text_classifier_model}'!")
             raise  # Critical error, stop container initialization
 
@@ -393,7 +392,7 @@ class Classifier:
         except KeyError:
             logger.error(f"SECRET ERROR: 'SERVICE_ACCOUNT_JSON' not found in environment. Ensure Modal secret '{SECRET_NAME}' is populated correctly.")
             raise # Critical error, cannot proceed without Drive access
-        except Exception as e:
+        except Exception:
             logger.exception("Failed to build Google Drive service client!")
             raise # Critical error
 
@@ -755,7 +754,7 @@ def setup_drive_folders(req_parent_folder_id: str = None):
     except KeyError:
          setup_logger.error(f"SECRET ERROR: 'SERVICE_ACCOUNT_JSON' not found in environment for setup function. Ensure Modal secret '{SECRET_NAME}' is correct.")
          raise
-    except Exception as e:
+    except Exception:
          setup_logger.exception("Failed to build Google Drive service client during setup.")
          raise
 
@@ -840,7 +839,7 @@ def main(drive_parent_id: str = None): # Allow overriding parent ID via CLI flag
             setup_drive_folders.local(req_parent_folder_id=parent_id_for_setup)
             from dotenv import load_dotenv
             load_dotenv(override=True)
-        except Exception as e:
+        except Exception:
             logger.exception("Failed to setup Google Drive structure. Exiting.")
             return
 
@@ -918,8 +917,9 @@ def main(drive_parent_id: str = None): # Allow overriding parent ID via CLI flag
     logger.info(f"  Skipped (e.g., not dir, no files): {skipped}")
     logger.info(f"  Processing errors (classification/scan): {errors}")
     logger.info(f"  Framework/Container errors: {framework_errors}")
-    if unknown > 0: logger.warning(f"  Unknown result status: {unknown}")
-    logger.info(f"--- Classification Method Breakdown ---")
+    if unknown > 0: 
+        logger.warning(f"  Unknown result status: {unknown}")
+    logger.info("--- Classification Method Breakdown ---")
     logger.info(f"  Classified by text:  {classified_by_text}")
     logger.info(f"  Fell back to image:  {classified_by_image}")
     logger.info(f"  Classification error: {classified_error}")

@@ -6,7 +6,6 @@ Performs stratified 5-fold cross-validation, threshold sweep, then final trainin
 Saves probe weights + optimal threshold to src/probe_weights_2.pt locally.
 """
 
-import os
 import csv
 import random
 import logging
@@ -290,7 +289,7 @@ def train_probe():
     # Average metrics
     avg = {k: sum(m[k] for m in fold_metrics) / N_FOLDS for k in fold_metrics[0]}
     logger.info(f"\n{'='*60}")
-    logger.info(f"Average cross-validation metrics:")
+    logger.info("Average cross-validation metrics:")
     logger.info(f"  Precision:   {avg['precision']:.3f}")
     logger.info(f"  Recall:      {avg['recall']:.3f}")
     logger.info(f"  Specificity: {avg['specificity']:.3f}")
