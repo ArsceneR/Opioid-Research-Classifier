@@ -71,6 +71,7 @@ image = (
 
 # Conditionally add probe weights to container image if they exist
 _probe_weights_path = Path(__file__).resolve().parent / "probe_weights.pt"
+logger.info(f"Looking for probe weights at: {_probe_weights_path}")
 if _probe_weights_path.exists():
     image = image.add_local_file(str(_probe_weights_path), "/probe/probe_weights.pt")
     logger.info("Probe weights found, adding to container image.")
@@ -339,7 +340,7 @@ class Classifier:
         self.probe = None
         self.probe_threshold = 0.5
         if self.use_probe:
-            probe_path = Path("/probe/probe_weights_2.pt")
+            probe_path = Path("/probe/probe_weights.pt")
             if probe_path.exists():
                 try:
                     probe_data = torch.load(probe_path, weights_only=False, map_location=self.device)
