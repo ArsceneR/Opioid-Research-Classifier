@@ -69,6 +69,14 @@ image = (
     .add_local_dir(str(LOCAL_DOWNLOADS_DIR), str(CONTAINER_DOWNLOADS_DIR))
 )
 
+# Conditionally add probe weights to container image if they exist
+_probe_weights_path = Path(__file__).resolve().parent / "probe_weights.pt"
+if _probe_weights_path.exists():
+    image = image.add_local_file(str(_probe_weights_path), "/probe/probe_weights.pt")
+    logger.info("Probe weights found, adding to container image.")
+else:
+    logger.info("No probe weights found at src/probe_weights.pt — will use zero-shot fallback.")
+
 # Create a Modal App instance
 app = modal.App(f"clip-classifier-{ROOT_FOLDER_NAME.lower().replace(' ', '-')}", image=image)
 
@@ -327,6 +335,28 @@ class Classifier:
             logger.exception("Failed to load CLIP model!")
             raise  # Critical error, stop container initialization
 
+        # Load linear probe if available
+        self.use_probe = os.environ.get("USE_LINEAR_PROBE", "true").lower() == "true"
+        self.probe = None
+        self.probe_threshold = 0.5
+        if self.use_probe:
+            probe_path = Path("/probe/probe_weights_2.pt")
+            if probe_path.exists():
+                try:
+                    probe_data = torch.load(probe_path, weights_only=False, map_location=self.device)
+                    self.probe = torch.nn.Linear(768, 1).to(self.device)
+                    self.probe.load_state_dict(probe_data["weights"])
+                    self.probe.eval()
+                    self.probe_threshold = probe_data.get("threshold", 0.5)
+                    logger.info(f"Linear probe loaded (threshold={self.probe_threshold:.3f})")
+                except Exception as e:
+                    logger.warning(f"Failed to load probe weights: {e}. Falling back to zero-shot.")
+                    self.probe = None
+                    self.use_probe = False
+            else:
+                logger.info("Probe weights not found at /probe/probe_weights.pt. Using zero-shot fallback.")
+                self.use_probe = False
+
         # Pre-tokenize and encode text prompts
         try:
             with torch.no_grad():
@@ -461,6 +491,9 @@ class Classifier:
     def _analyze_image(self, image_path: Path):
         """
         Analyzes a single image using fallback logic: text classification if confident, otherwise image classification.
+
+        Returns:
+            Tuple of (category, classification_method) where method is "text", "image", or "error".
         """
         import torch
         from PIL import Image, UnidentifiedImageError
@@ -482,7 +515,7 @@ class Classifier:
                     best_category = max(text_probs, key=text_probs.get)
                     duration = time.time() - analyze_start_time
                     logger.info(f"Item {image_path.name} classified via TEXT as: {best_category} in {duration:.2f}s. Confidence: {text_confidence:.3f}. (Scores: { {k: f'{v:.3f}' for k, v in text_probs.items()} })")
-                    return best_category
+                    return (best_category, "text")
                 else:
                     # Text confidence < threshold: fallback to image classification
                     logger.info(f"Text confidence ({text_confidence:.4f}) < threshold ({self.text_confidence_threshold:.4f}) for {image_path.name}, falling back to image classification")
@@ -496,62 +529,63 @@ class Classifier:
                 image_features = self.model.encode_image(image_input)
                 image_features /= image_features.norm(dim=-1, keepdim=True)
 
-                # Calculate logits (before softmax) with temperature scaling
-                # (temperature * image_features @ self.text_features.T) gives logits for each prompt
-                logits = (self.temperature * image_features @ self.text_features.T).squeeze(0)  # Shape: [num_prompts]
+            if self.use_probe and self.probe is not None:
+                # Linear probe path
+                with torch.no_grad():
+                    logit = self.probe(image_features.float()).squeeze()
+                    prob_opioid = torch.sigmoid(logit).item()
+                best_category = "opioid_related" if prob_opioid >= self.probe_threshold else "neutral_content"
+                category_scores = {"opioid_related": prob_opioid, "neutral_content": 1 - prob_opioid}
+                confidence = abs(prob_opioid - self.probe_threshold)
 
-            # Aggregate logits per category using max pooling
-            # This gives equal weight to each category regardless of prompt count
-            category_logits_list = []
-            category_order = list(self.CATEGORIES.keys())
-            for category in category_order:
-                # Find indices of prompts belonging to this category
-                category_indices = [i for i, cat in enumerate(self.PROMPT_TO_CATEGORY_MAP) if cat == category]
-                if category_indices:
-                    # Use mean pooling: average logits across all prompts for this category
-                    indices_tensor = torch.tensor(category_indices, device=self.device)
-                    category_logit = logits[indices_tensor].mean()
-                    category_logits_list.append(category_logit)
-                else:
-                    # Should not happen, but handle gracefully
-                    category_logits_list.append(torch.tensor(float('-inf'), device=self.device))
-
-            # Stack aggregated category logits into a tensor for softmax
-            category_logits_tensor = torch.stack(category_logits_list)
-            
-            # Apply softmax to aggregated category logits to get probabilities
-            category_probs = category_logits_tensor.softmax(dim=-1).cpu().numpy()
-            category_scores = {cat: prob for cat, prob in zip(category_order, category_probs)}
-
-            # Calculate confidence as the difference between top 2 probabilities
-            sorted_probs = sorted(category_probs, reverse=True)
-            confidence = sorted_probs[0] - sorted_probs[1] if len(sorted_probs) >= 2 else sorted_probs[0]
-
-            # Determine best category based on highest probability
-            if not category_scores:  # Should not happen if CATEGORIES is populated
-                best_category = "error"
-                logger.error(f"No category scores generated for {image_path.name}")
+                duration = time.time() - analyze_start_time
+                logger.info(f"Item {image_path.name} classified via PROBE as: {best_category} in {duration:.2f}s. P(opioid)={prob_opioid:.3f} threshold={self.probe_threshold:.3f}")
+                return (best_category, "image")
             else:
-                best_category = max(category_scores, key=category_scores.get)
-                
-                # Apply CLIP_CONFIDENCE_THRESHOLD to image classification when used
-                if confidence < self.image_confidence_threshold:
-                    logger.debug(f"Low image confidence ({confidence:.3f} < {self.image_confidence_threshold:.3f}) for {image_path.name}, defaulting to neutral_content")
-                    best_category = "neutral_content"
+                # Zero-shot prompt matching fallback
+                with torch.no_grad():
+                    logits = (self.temperature * image_features @ self.text_features.T).squeeze(0)
 
-            duration = time.time() - analyze_start_time
-            logger.info(f"Item {image_path.name} classified via IMAGE as: {best_category} in {duration:.2f}s. Confidence: {confidence:.3f}. (Scores: { {k: f'{v:.3f}' for k, v in category_scores.items()} })")
-            return best_category
+                category_logits_list = []
+                category_order = list(self.CATEGORIES.keys())
+                for category in category_order:
+                    category_indices = [i for i, cat in enumerate(self.PROMPT_TO_CATEGORY_MAP) if cat == category]
+                    if category_indices:
+                        indices_tensor = torch.tensor(category_indices, device=self.device)
+                        category_logit = logits[indices_tensor].mean()
+                        category_logits_list.append(category_logit)
+                    else:
+                        category_logits_list.append(torch.tensor(float('-inf'), device=self.device))
+
+                category_logits_tensor = torch.stack(category_logits_list)
+                category_probs = category_logits_tensor.softmax(dim=-1).cpu().numpy()
+                category_scores = {cat: prob for cat, prob in zip(category_order, category_probs)}
+
+                sorted_probs = sorted(category_probs, reverse=True)
+                confidence = sorted_probs[0] - sorted_probs[1] if len(sorted_probs) >= 2 else sorted_probs[0]
+
+                if not category_scores:
+                    best_category = "error"
+                    logger.error(f"No category scores generated for {image_path.name}")
+                else:
+                    best_category = max(category_scores, key=category_scores.get)
+                    if confidence < self.image_confidence_threshold:
+                        logger.debug(f"Low image confidence ({confidence:.3f} < {self.image_confidence_threshold:.3f}) for {image_path.name}, defaulting to neutral_content")
+                        best_category = "neutral_content"
+
+                duration = time.time() - analyze_start_time
+                logger.info(f"Item {image_path.name} classified via IMAGE as: {best_category} in {duration:.2f}s. Confidence: {confidence:.3f}. (Scores: { {k: f'{v:.3f}' for k, v in category_scores.items()} })")
+                return (best_category, "image")
 
         except UnidentifiedImageError:
             logger.error(f"Cannot identify image file (corrupted or wrong format): {image_path}")
-            return "error"
+            return ("error", "error")
         except FileNotFoundError:
              logger.error(f"Image file not found at path: {image_path}")
-             return "error"
+             return ("error", "error")
         except Exception as e:
             logger.exception(f"Unexpected error during image analysis for {image_path}: {e}")
-            return "error"
+            return ("error", "error")
 
     @modal.method()
     def process_item(self, item_dir_name: str):
@@ -582,6 +616,7 @@ class Classifier:
         image_path = None
         files_to_upload = []
         category = "error" # Default category if issues arise early
+        classification_method = "error" # Default if classification never runs
         target_category_folder_id = self.category_folders.get("error") # Default GDrive target
 
         if not item_path.is_dir():
@@ -613,9 +648,10 @@ class Classifier:
             if not image_path:
                 logger.warning(f"No image file found in {item_path}. Classifying item as 'error'.")
                 category = "error"
+                classification_method = "error"
             else:
                 # Analyze the found image
-                category = self._analyze_image(image_path) # Returns 'error' on failure
+                category, classification_method = self._analyze_image(image_path) # Returns ('error', 'error') on failure
 
             # Get the Google Drive folder ID for the determined category
             target_category_folder_id = self.category_folders.get(category)
@@ -677,6 +713,7 @@ class Classifier:
             "item": item_dir_name,
             "status": final_status,
             "category": category,
+            "classification_method": classification_method,
             "files_found": len(files_to_upload),
             "uploads_successful": upload_count,
             "upload_errors": upload_errors,
@@ -841,7 +878,7 @@ def main(drive_parent_id: str = None): # Allow overriding parent ID via CLI flag
     map_start_time = time.time()
 
     # Use .map for parallel execution. `return_exceptions=True` allows processing to continue if one item fails.
-    for result in classifier.process_item.map(items_to_process, return_exceptions=True):
+    for result in classifier.process_item.map(items_to_process, return_exceptions=True, wrap_returned_exceptions=False):
         if isinstance(result, Exception):
             # Log the exception traceback from the remote container
             logger.error(f"An exception occurred in remote processing: {result}", exc_info=False) # exc_info=False as traceback is in result
@@ -869,6 +906,11 @@ def main(drive_parent_id: str = None): # Allow overriding parent ID via CLI flag
     skipped_exist = sum(1 for r in results if isinstance(r, dict) and r.get("status") == "skipped_exist")
     unknown = len(results) - (processed_ok + processed_w_errors + errors + framework_errors + skipped + skipped_exist)
 
+    # Classification method breakdown
+    classified_by_text = sum(1 for r in results if isinstance(r, dict) and r.get("classification_method") == "text")
+    classified_by_image = sum(1 for r in results if isinstance(r, dict) and r.get("classification_method") == "image")
+    classified_error = sum(1 for r in results if isinstance(r, dict) and r.get("classification_method") == "error")
+
     logger.info(f"Total items processed: {len(results)} / {len(items_to_process)}")
     logger.info(f"  Processed successfully: {processed_ok}")
     logger.info(f"  Processed with upload errors: {processed_w_errors}")
@@ -877,6 +919,10 @@ def main(drive_parent_id: str = None): # Allow overriding parent ID via CLI flag
     logger.info(f"  Processing errors (classification/scan): {errors}")
     logger.info(f"  Framework/Container errors: {framework_errors}")
     if unknown > 0: logger.warning(f"  Unknown result status: {unknown}")
+    logger.info(f"--- Classification Method Breakdown ---")
+    logger.info(f"  Classified by text:  {classified_by_text}")
+    logger.info(f"  Fell back to image:  {classified_by_image}")
+    logger.info(f"  Classification error: {classified_error}")
 
     total_duration = time.time() - run_start_time
     logger.info(f"Total job duration: {total_duration:.2f} seconds.")
