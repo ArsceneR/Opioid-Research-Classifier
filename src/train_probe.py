@@ -3,7 +3,7 @@ Train a linear probe on frozen CLIP ViT-L/14 embeddings for opioid image classif
 
 Uses the 300-image fine-tuning set with human labels. Runs on Modal GPU.
 Performs stratified 5-fold cross-validation, threshold sweep, then final training.
-Saves probe weights + optimal threshold to src/probe_weights_2.pt locally.
+Saves probe weights + optimal threshold to src/probe_weight.pt locally.
 """
 
 import csv
@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 FINETUNING_DIR = Path("/Users/arscenerubayita/Documents/Personal_Programming/Instagram_Scrape_and_Store/300_images_(fine_tuning)")
 CSV_PATH = PROJECT_ROOT / "Excel_With_IDs(Sheet1).csv"
-OUTPUT_PATH = PROJECT_ROOT / "src" / "probe_weights_2.pt"
+OUTPUT_PATH = PROJECT_ROOT / "src" / "probe_weights.pt"
 
 CONTAINER_DATA_DIR = Path("/data/images")
 CONTAINER_CSV_PATH = Path("/data/labels.csv")
