@@ -1,3 +1,9 @@
+<div align="center">
+
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/ArsceneR/Instagram-Post-Classifier)
+
+</div>
+
 # Instagram Scrape and Store
 
 A tool for downloading, classifying, and organizing Instagram posts related to opioid content using CLIP image embeddings and zero-shot text classification, running on Modal cloud GPUs.
