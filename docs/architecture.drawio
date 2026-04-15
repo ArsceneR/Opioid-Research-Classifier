@@ -1,0 +1,351 @@
+<mxfile host="app.diagrams.net" agent="Claude">
+  <diagram id="opioid-classifier-architecture" name="Classification Pipeline">
+    <mxGraphModel dx="2520" dy="1519" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;fontSize=28;fontStyle=1;align=center;verticalAlign=middle;" value="Opioid Content Classification Pipeline" vertex="1">
+          <mxGeometry height="50" width="700" x="460" y="-90" as="geometry" />
+        </mxCell>
+        <mxCell id="metadata" parent="1" style="text;html=1;fontSize=13;align=center;verticalAlign=middle;fontColor=#999999;" value="&lt;i&gt;Author: ArsceneR | Last updated: 2026-04-07 | v2.0&lt;/i&gt;" vertex="1">
+          <mxGeometry height="25" width="500" x="430" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="a_env_modal" edge="1" parent="1" source="local_frame" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#808080;entryX=-0.003;entryY=0.139;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1.006;exitY=0.326;exitDx=0;exitDy=0;exitPerimeter=0;" target="modal_frame">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="340" y="195" as="sourcePoint" />
+            <mxPoint x="400" y="195" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_env_modal_l" connectable="0" parent="a_env_modal" style="edgeLabel;html=1;fontSize=12;fontColor=#808080;" value="Secrets &amp;amp; thresholds" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-57" y="-35" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_dl_modal" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#808080;entryX=0.003;entryY=0.225;entryDx=0;entryDy=0;entryPerimeter=0;" target="modal_frame">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="174" y="253" as="sourcePoint" />
+            <mxPoint x="370" y="254.33" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_dl_modal_l" connectable="0" parent="a_dl_modal" style="edgeLabel;html=1;fontSize=12;fontColor=#808080;" value="add_local_dir&lt;br&gt;(baked into image)" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-58" y="-40" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_pw_modal" edge="1" parent="1" source="local_frame" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#9673A6;dashed=1;exitX=0.994;exitY=0.843;exitDx=0;exitDy=0;exitPerimeter=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="380" y="345" as="sourcePoint" />
+            <mxPoint x="440" y="345" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_pw_modal_l" connectable="0" parent="a_pw_modal" style="edgeLabel;html=1;fontSize=12;fontColor=#9673A6;" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;add_local_file&lt;br&gt;&lt;font style=&quot;&quot;&gt;(/probe/probe_weights.pt)&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-57" y="-42" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_clip_text_enc" edge="1" parent="1" source="clip_model" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#D4A843;" target="text_prompts">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_clip_text_enc_l" connectable="0" parent="a_clip_text_enc" style="edgeLabel;html=1;fontSize=12;fontColor=#D4A843;" value="encode_text()" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_cap_txtclf" edge="1" parent="1" source="read_caption" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#D4A843;" target="text_clf_step">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_cap_txtclf_l" connectable="0" parent="a_cap_txtclf" style="edgeLabel;html=1;fontSize=12;fontColor=#D4A843;" value="Stripped caption" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_txtclf_conf" edge="1" parent="1" source="text_clf_step" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#D4A843;" target="txt_confidence">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_conf_result" edge="1" parent="1" source="txt_confidence" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#82B366;" target="result_category">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_conf_result_l" connectable="0" parent="a_conf_result" style="edgeLabel;html=1;fontSize=12;fontColor=#82B366;" value="&amp;ge; TEXT_CONFIDENCE&lt;br&gt;(0.9)" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_conf_imgenc" edge="1" parent="1" source="txt_confidence" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#B85450;" target="clip_img_encode">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_conf_imgenc_l" connectable="0" parent="a_conf_imgenc" style="edgeLabel;html=1;fontSize=12;fontColor=#B85450;" value="&amp;lt; threshold&lt;br&gt;(fallback)" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_clip_img_enc" edge="1" parent="1" source="clip_model" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#6C8EBF;" target="clip_img_encode">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_clip_img_enc_l" connectable="0" parent="a_clip_img_enc" style="edgeLabel;html=1;fontSize=12;fontColor=#6C8EBF;" value="encode_image()" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_emb_probe_dec" edge="1" parent="1" source="clip_img_encode" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#6C8EBF;" target="probe_decision">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_emb_probe_dec_l" connectable="0" parent="a_emb_probe_dec" style="edgeLabel;html=1;fontSize=12;fontColor=#6C8EBF;" value="768-dim embedding" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_dec_probe" edge="1" parent="1" source="probe_decision" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#9673A6;" target="probe_classify">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_dec_probe_l" connectable="0" parent="a_dec_probe" style="edgeLabel;html=1;fontSize=12;fontColor=#9673A6;" value="Probe loaded" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_dec_zs" edge="1" parent="1" source="probe_decision" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#B85450;dashed=1;" target="zs_classify">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_dec_zs_l" connectable="0" parent="a_dec_zs" style="edgeLabel;html=1;fontSize=12;fontColor=#B85450;" value="No probe" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_txtfeat_zs" edge="1" parent="1" source="text_prompts" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#D4A843;dashed=1;" target="zs_classify">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_txtfeat_zs_l" connectable="0" parent="a_txtfeat_zs" style="edgeLabel;html=1;fontSize=12;fontColor=#D4A843;" value="text_features&lt;br&gt;(cosine sim)" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_probe_result" edge="1" parent="1" source="probe_classify" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#9673A6;" target="result_category">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_zs_result" edge="1" parent="1" source="zs_classify" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#B85450;dashed=1;" target="result_category">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_result_upload" edge="1" parent="1" source="result_category" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#82B366;" target="upload_step">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_upload_gdrive" edge="1" parent="1" source="upload_step" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#82B366;" target="gdrive_frame">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_upload_gdrive_l" connectable="0" parent="a_upload_gdrive" style="edgeLabel;html=1;fontSize=12;fontColor=#82B366;" value="upload_to_drive()" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_driveclient_upload" edge="1" parent="1" source="gdrive_client" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#82B366;dashed=1;" target="upload_step">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_main_map" edge="1" parent="1" source="main_entrypoint" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#6C8EBF;" target="read_caption">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_main_map_l" connectable="0" parent="a_main_map" style="edgeLabel;html=1;fontSize=12;fontColor=#6C8EBF;" value="process_item.map()&lt;br&gt;(parallel)" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_distilbart_txtclf" edge="1" parent="1" source="distilbart_model" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#D4A843;dashed=1;" target="text_clf_step">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_traindata_probe" edge="1" parent="1" source="train_data" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#9673A6;dashed=1;" target="train_process">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_train_output" edge="1" parent="1" source="train_process" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#9673A6;dashed=1;" target="pw_output">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_gdrive_eval" edge="1" parent="1" source="gdrive_frame" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#666666;dashed=1;" target="eval_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_gdrive_eval_l" connectable="0" parent="a_gdrive_eval" style="edgeLabel;html=1;fontSize=12;fontColor=#666666;" value="Download&lt;br&gt;predictions" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_csv_eval" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#666666;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="380" y="800" as="sourcePoint" />
+            <mxPoint x="1270" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_csv_eval_l" connectable="0" parent="a_csv_eval" style="edgeLabel;html=1;fontSize=12;fontColor=#666666;" value="Human labels (CSV)" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_eval_xlsx" edge="1" parent="1" source="eval_box" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#666666;dashed=1;" target="eval_output">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="local_frame" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="290" width="360" x="-190" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="local_title" parent="1" style="text;html=1;fontSize=18;fontStyle=1;align=center;verticalAlign=middle;" value="Local Machine" vertex="1">
+          <mxGeometry height="30" width="300" x="-160" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="env_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#808080;fontSize=13;" value=".env&lt;br&gt;&lt;i&gt;Thresholds (0.9/0.9), folder IDs,&lt;br&gt;Modal secrets, GPU config&lt;/i&gt;" vertex="1">
+          <mxGeometry height="50" width="300" x="-160" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="dl_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#808080;fontSize=13;" value="~/Downloads/All_Downloads/&lt;br&gt;&lt;i&gt;Source images + .txt captions&lt;/i&gt;" vertex="1">
+          <mxGeometry height="45" width="300" x="-160" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="pw_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673A6;fontSize=13;" value="src/probe_weights.pt&lt;br&gt;&lt;i&gt;Linear probe weights + optimal threshold&lt;/i&gt;" vertex="1">
+          <mxGeometry height="50" width="300" x="-160" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="modal_frame" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6C8EBF;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="680" width="780" x="440" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="modal_title" parent="1" style="text;html=1;fontSize=18;fontStyle=1;align=center;verticalAlign=middle;fontColor=#6C8EBF;" value="Modal Cloud (L40S GPU)" vertex="1">
+          <mxGeometry height="30" width="300" x="470" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="init_frame" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#6C8EBF;strokeWidth=1;dashed=1;" value="" vertex="1">
+          <mxGeometry height="130" width="720" x="470" y="165" as="geometry" />
+        </mxCell>
+        <mxCell id="init_title" parent="1" style="text;html=1;fontSize=14;fontStyle=1;align=left;verticalAlign=middle;fontColor=#6C8EBF;" value="Container Init (@modal.enter)" vertex="1">
+          <mxGeometry height="25" width="280" x="500" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="clip_model" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6C8EBF;fontSize=12;" value="CLIP ViT-L/14&lt;br&gt;&lt;i&gt;(image + text encoder)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="50" width="155" x="500" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="distilbart_model" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#D4A843;fontSize=12;" value="distilbart-mnli&lt;br&gt;&lt;i&gt;(zero-shot NLI)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="50" width="155" x="670" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="text_prompts" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#D4A843;fontSize=12;" value="Pre-encoded prompts&lt;br&gt;&lt;i&gt;~100 text_features&lt;/i&gt;" vertex="1">
+          <mxGeometry height="50" width="155" x="840" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="gdrive_client" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82B366;fontSize=12;" value="Google Drive&lt;br&gt;&lt;i&gt;API client&lt;/i&gt;" vertex="1">
+          <mxGeometry height="50" width="155" x="1010" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="classify_frame" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#6C8EBF;strokeWidth=1;dashed=1;" value="" vertex="1">
+          <mxGeometry height="450" width="750" x="450" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="classify_title" parent="1" style="text;html=1;fontSize=14;fontStyle=1;align=left;verticalAlign=middle;fontColor=#6C8EBF;" value="Per-Item: process_item() via .map()" vertex="1">
+          <mxGeometry height="25" width="320" x="500" y="325" as="geometry" />
+        </mxCell>
+        <mxCell id="main_entrypoint" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6C8EBF;fontSize=13;" value="main()&lt;br&gt;&lt;i&gt;List dirs &amp;rarr; .map()&lt;/i&gt;" vertex="1">
+          <mxGeometry height="45" width="160" x="500" y="355" as="geometry" />
+        </mxCell>
+        <mxCell id="read_caption" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#D4A843;fontSize=13;" value="_read_caption()&lt;br&gt;&lt;i&gt;Read .txt, strip #tags&lt;/i&gt;" vertex="1">
+          <mxGeometry height="45" width="170" x="700" y="355" as="geometry" />
+        </mxCell>
+        <mxCell id="text_clf_step" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#D4A843;fontSize=13;" value="_classify_text()&lt;br&gt;&lt;i&gt;Zero-shot NLI&lt;/i&gt;" vertex="1">
+          <mxGeometry height="45" width="170" x="920" y="355" as="geometry" />
+        </mxCell>
+        <mxCell id="TOZ8QU8daMOynxAZkAf2-1" edge="1" parent="1" source="txt_confidence" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="result_category" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TOZ8QU8daMOynxAZkAf2-2" edge="1" parent="1" source="txt_confidence" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="clip_img_encode" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="txt_confidence" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#D4A843;strokeWidth=2;fontSize=13;" value="Confidence&lt;br&gt;&amp;ge; 0.9 ?" vertex="1">
+          <mxGeometry height="80" width="130" x="930" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="TOZ8QU8daMOynxAZkAf2-3" edge="1" parent="1" source="clip_img_encode" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="probe_decision" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="clip_img_encode" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6C8EBF;fontSize=13;" value="CLIP encode_image()&lt;br&gt;&lt;i&gt;Image &amp;rarr; 768-dim vector&lt;/i&gt;" vertex="1">
+          <mxGeometry height="40" width="195" x="660" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="TOZ8QU8daMOynxAZkAf2-4" edge="1" parent="1" source="probe_decision" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="probe_classify" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="probe_decision" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6C8EBF;strokeWidth=2;fontSize=13;" value="Probe&lt;br&gt;loaded?" vertex="1">
+          <mxGeometry height="75" width="127.5" x="692.5" y="522.5" as="geometry" />
+        </mxCell>
+        <mxCell id="TOZ8QU8daMOynxAZkAf2-5" edge="1" parent="1" source="probe_classify" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="zs_classify" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="probe_classify" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673A6;strokeWidth=2;fontSize=13;" value="Linear Probe&lt;br&gt;&lt;i&gt;Linear(768,1) &amp;rarr; sigmoid &amp;rarr; threshold&lt;/i&gt;" vertex="1">
+          <mxGeometry height="45" width="220" x="890" y="525" as="geometry" />
+        </mxCell>
+        <mxCell id="TOZ8QU8daMOynxAZkAf2-16" edge="1" parent="1" source="zs_classify" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="TOZ8QU8daMOynxAZkAf2-14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zs_classify" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#B85450;fontSize=13;dashed=1;" value="Zero-Shot Prompts&lt;br&gt;&lt;i&gt;emb @ text_features &amp;rarr; softmax&lt;/i&gt;" vertex="1">
+          <mxGeometry height="52.5" width="220" x="670" y="660" as="geometry" />
+        </mxCell>
+        <mxCell id="TOZ8QU8daMOynxAZkAf2-19" edge="1" parent="1" source="result_category" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" target="upload_step">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="result_category" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82B366;strokeWidth=2;fontSize=13;fontStyle=1;" value="Category" vertex="1">
+          <mxGeometry height="70" width="70" x="1100" y="425" as="geometry" />
+        </mxCell>
+        <mxCell id="upload_step" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82B366;fontSize=12;" value="Upload&lt;br&gt;&lt;i&gt;create subfolder&lt;br&gt;+ upload files&lt;/i&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1050" y="635" as="geometry" />
+        </mxCell>
+        <mxCell id="gdrive_frame" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82B366;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="310" width="280" x="1340" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="gdrive_title" parent="1" style="text;html=1;fontSize=18;fontStyle=1;align=center;verticalAlign=middle;fontColor=#82B366;" value="Google Drive" vertex="1">
+          <mxGeometry height="30" width="220" x="1380" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="gdrive_root" parent="1" style="text;html=1;fontSize=14;fontStyle=1;align=left;verticalAlign=middle;" value="Classified_Posts_2026/" vertex="1">
+          <mxGeometry height="25" width="220" x="1380" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="gdrive_opioid" parent="1" style="text;html=1;fontSize=14;align=left;verticalAlign=middle;fontColor=#B85450;" value="&amp;#9500;&amp;#9472; Opioid_Related/" vertex="1">
+          <mxGeometry height="25" width="220" x="1380" y="205" as="geometry" />
+        </mxCell>
+        <mxCell id="gdrive_opioid_sub" parent="1" style="text;html=1;fontSize=12;align=left;verticalAlign=middle;fontColor=#999999;" value="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;#9500;&amp;#9472; {shortcode}/ (.jpg + .txt)" vertex="1">
+          <mxGeometry height="25" width="230" x="1380" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="gdrive_neutral" parent="1" style="text;html=1;fontSize=14;align=left;verticalAlign=middle;fontColor=#82B366;" value="&amp;#9500;&amp;#9472; Neutral_Content/" vertex="1">
+          <mxGeometry height="25" width="220" x="1380" y="265" as="geometry" />
+        </mxCell>
+        <mxCell id="gdrive_neutral_sub" parent="1" style="text;html=1;fontSize=12;align=left;verticalAlign=middle;fontColor=#999999;" value="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;#9500;&amp;#9472; {shortcode}/ (.jpg + .txt)" vertex="1">
+          <mxGeometry height="25" width="230" x="1380" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="gdrive_error" parent="1" style="text;html=1;fontSize=14;align=left;verticalAlign=middle;fontColor=#999999;" value="&amp;#9492;&amp;#9472; Processing_Errors/" vertex="1">
+          <mxGeometry height="25" width="220" x="1380" y="325" as="geometry" />
+        </mxCell>
+        <mxCell id="gdrive_note" parent="1" style="text;html=1;fontSize=12;align=center;verticalAlign=middle;fontColor=#999999;" value="&lt;i&gt;Created by setup_drive_folders()&lt;/i&gt;" vertex="1">
+          <mxGeometry height="20" width="220" x="1380" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="train_frame" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E8F9;strokeColor=#9673A6;strokeWidth=2;dashed=1;" value="" vertex="1">
+          <mxGeometry height="220" width="360" x="-750" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="train_title" parent="1" style="text;html=1;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;fontColor=#9673A6;" value="Training Pipeline (train_probe.py)" vertex="1">
+          <mxGeometry height="30" width="300" x="-720" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="train_data" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E8F9;strokeColor=#9673A6;fontSize=13;" value="300 images&lt;br&gt;+ CSV labels" vertex="1">
+          <mxGeometry height="50" width="130" x="-720" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="train_process" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E8F9;strokeColor=#9673A6;fontSize=13;" value="5-fold CV&lt;br&gt;&lt;i&gt;CLIP &amp;rarr; Linear(768,1)&lt;br&gt;weighted BCE&lt;/i&gt;" vertex="1">
+          <mxGeometry height="60" width="140" x="-560" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="pw_output" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673A6;strokeWidth=2;fontSize=13;" value="probe_weights.pt" vertex="1">
+          <mxGeometry height="35" width="140" x="-560" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="eval_frame" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;strokeWidth=1;dashed=1;" value="" vertex="1">
+          <mxGeometry height="200" width="340" x="1910" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="eval_title" parent="1" style="text;html=1;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;fontColor=#666666;" value="Evaluation Pipeline" vertex="1">
+          <mxGeometry height="25" width="220" x="1960" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="eval_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12;" value="evaluate_opioid_classifier_accuracy.py&lt;br&gt;&lt;i&gt;Confusion matrix, P/R/F1, specificity&lt;/i&gt;" vertex="1">
+          <mxGeometry height="55" width="220" x="1960" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="eval_output" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=13;fontStyle=2;" value="classifier_evaluation.xlsx" vertex="1">
+          <mxGeometry height="35" width="220" x="1960" y="305" as="geometry" />
+        </mxCell>
+        <mxCell id="human_labels" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=13;" value="Human Labels&lt;br&gt;&lt;i&gt;Excel_With_IDs CSV (300)&lt;br&gt;Coding Sheet CSV (100)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="60" width="360" x="-750" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_frame" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#999999;strokeWidth=1;dashed=1;" value="" vertex="1">
+          <mxGeometry height="85" width="560" x="580" y="835" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_title" parent="1" style="text;html=1;fontSize=13;fontStyle=1;align=left;verticalAlign=middle;fontColor=#999999;" value="Legend" vertex="1">
+          <mxGeometry height="20" width="60" x="500" y="815" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_text" parent="1" style="text;html=1;fontSize=13;align=left;verticalAlign=middle;" value="&lt;span style=&#39;color:#D4A843&#39;&gt;&amp;#9473;&amp;#9473;&lt;/span&gt; Text classification path&amp;nbsp;&amp;nbsp;&lt;span style=&#39;color:#6C8EBF&#39;&gt;&amp;#9473;&amp;#9473;&lt;/span&gt; Image classification path&amp;nbsp;&amp;nbsp;&lt;span style=&#39;color:#9673A6&#39;&gt;&amp;#9473;&amp;#9473;&lt;/span&gt; Linear probe path&lt;br&gt;&lt;span style=&#39;color:#82B366&#39;&gt;&amp;#9473;&amp;#9473;&lt;/span&gt; Upload / output&amp;nbsp;&amp;nbsp;&lt;span style=&#39;color:#B85450&#39;&gt;- - -&lt;/span&gt; Zero-shot fallback (legacy)&amp;nbsp;&amp;nbsp;&lt;span style=&#39;color:#808080&#39;&gt;&amp;#9473;&amp;#9473;&lt;/span&gt; Config / data transfer" vertex="1">
+          <mxGeometry height="45" width="510" x="605" y="865" as="geometry" />
+        </mxCell>
+        <mxCell id="TOZ8QU8daMOynxAZkAf2-17" edge="1" parent="1" source="TOZ8QU8daMOynxAZkAf2-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="upload_step" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TOZ8QU8daMOynxAZkAf2-14" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82B366;strokeWidth=2;fontSize=13;fontStyle=1;" value="Category" vertex="1">
+          <mxGeometry height="70" width="70" x="940" y="630" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

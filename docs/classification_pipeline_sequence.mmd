@@ -1,0 +1,128 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant Main as main()<br/>@local_entrypoint
+    participant Setup as setup_drive_folders()
+    participant FS as Local FS<br/>(LOCAL_DOWNLOADS_DIR)
+    participant Modal as Modal Runtime<br/>(.map dispatcher)
+    participant C as Classifier<br/>(@app.cls, L40S)
+    participant CLIP as CLIP ViT-L/14
+    participant TXT as distilbart-mnli-12-3<br/>(zero-shot text)
+    participant Probe as Linear Probe<br/>(768→1)
+    participant GDrive as Google Drive API
+
+    User->>Main: modal run classifier.py<br/>[--drive-parent-id]
+
+    note over Main,GDrive: Phase 1 — Drive folder setup (local, one-shot)
+    Main->>Setup: setup_drive_folders.local(parent_id)
+    Setup->>GDrive: create_drive_folder(ROOT_FOLDER_NAME)
+    GDrive-->>Setup: root folder ID
+    loop for each category<br/>(opioid_related, neutral_content, error)
+        Setup->>GDrive: create_drive_folder(category, root_id)
+        GDrive-->>Setup: category folder ID
+        Setup->>FS: append *_FOLDER_ID to .env
+    end
+    Setup-->>Main: category_folders dict
+    Main->>FS: load_dotenv(override=True)
+
+    note over Main,FS: Phase 2 — Enumerate work
+    Main->>FS: iterdir(LOCAL_DOWNLOADS_DIR)
+    FS-->>Main: [item_dir_name, ...]
+    alt no items found
+        Main-->>User: warn + exit
+    end
+
+    note over Main,Probe: Phase 3 — Container cold start (@modal.enter)
+    Main->>Modal: Classifier()
+    Modal->>C: start() [per container, min=2, max=10]
+    C->>C: read env<br/>(CLIP_CONFIDENCE_THRESHOLD,<br/>TEXT_CONFIDENCE_THRESHOLD,<br/>CLIP_TEMPERATURE, USE_LINEAR_PROBE)
+    C->>C: build CATEGORIES prompt lists<br/>& PROMPT_TO_CATEGORY_MAP
+    C->>CLIP: clip.load("ViT-L/14", device)
+    CLIP-->>C: model, preprocess
+    opt USE_LINEAR_PROBE and /probe/probe_weights.pt exists
+        C->>Probe: torch.load(probe_weights.pt)
+        Probe-->>C: weights + threshold
+    end
+    C->>CLIP: encode_text(ALL_PROMPTS)
+    CLIP-->>C: normalized text_features
+    C->>TXT: pipeline("zero-shot-classification")
+    TXT-->>C: ready
+    C->>GDrive: build("drive","v3", service_account)
+    GDrive-->>C: drive_service
+
+    note over Main,GDrive: Phase 4 — Parallel per-item processing
+    Main->>Modal: process_item.map(items, return_exceptions=True)
+
+    loop for each item_dir_name (parallel across containers)
+        Modal->>C: process_item(item_dir_name)
+        C->>FS: iterdir(item_path)
+        FS-->>C: files_to_upload + first image_path
+
+        alt no files
+            C-->>Modal: {status: skipped, reason: "no files"}
+        else no image found
+            C->>C: category="error"
+        else image found
+            C->>C: _analyze_image(image_path)
+            activate C
+
+            C->>FS: read image_path.with_suffix('.txt')
+            FS-->>C: caption raw text (or missing)
+
+            opt caption present
+                C->>C: strip #hashtags, normalize whitespace
+                C->>TXT: classify(caption,<br/>["opioid_related","neutral_content"])
+                TXT-->>C: {labels, scores}
+                C->>C: confidence = top1 - top2
+
+                alt confidence ≥ TEXT_CONFIDENCE_THRESHOLD (0.6)
+                    C-->>C: return (best_category, "text")
+                else low text confidence
+                    note right of C: fall through to image path
+                end
+            end
+
+            C->>CLIP: preprocess(image).unsqueeze(0).cuda()
+            C->>CLIP: encode_image(input)
+            CLIP-->>C: image_features (normalized)
+
+            alt use_probe and probe loaded
+                C->>Probe: probe(image_features.float())
+                Probe-->>C: logit
+                C->>C: prob_opioid = sigmoid(logit)
+                C->>C: category = prob_opioid ≥ probe_threshold<br/>? opioid_related : neutral_content
+                C-->>C: return (category, "image")
+            else zero-shot prompt matching
+                C->>C: logits = temp * image_features @ text_features.T
+                C->>C: per-category mean logit → softmax
+                C->>C: confidence = top1 - top2
+                opt confidence < CLIP_CONFIDENCE_THRESHOLD
+                    C->>C: override → neutral_content
+                end
+                C-->>C: return (category, "image")
+            end
+
+            opt UnidentifiedImageError / FileNotFoundError / Exception
+                C-->>C: return ("error","error")
+            end
+            deactivate C
+        end
+
+        C->>GDrive: create_drive_folder(item_dir_name,<br/>category_folder_id)
+        GDrive-->>C: (new_folder?, subfolder_id)
+        alt folder already existed
+            C-->>Modal: {status: skipped_exist, category}
+        else new subfolder created
+            loop for each file in files_to_upload
+                C->>GDrive: files().create(media=MediaFileUpload(...))
+                GDrive-->>C: file id (or error)
+            end
+            C-->>Modal: {status: processed / processed_with_errors,<br/>category, classification_method,<br/>uploads_successful, upload_errors, duration}
+        end
+
+        Modal-->>Main: yield result (or Exception)
+    end
+
+    note over Main,User: Phase 5 — Summary
+    Main->>Main: tally statuses + classification_method breakdown
+    Main-->>User: logs (counts, text vs image fallback, total duration)
