@@ -103,6 +103,6 @@ classDiagram
     ClassificationResult --> ClassificationMethod : classification_method
     ClassificationResult --> RunStatus : status
     ClassificationResult --> DriveFolder : uploaded to
-    DriveFolder --> Category : maps 1:1
+    DriveFolder "1" --> "1" Category : maps to
     FineTuningLabel ..> ProbeWeights : train_probe.py trains
     ProbeWeights ..> ImageClassificationOutput : probe branch reads
