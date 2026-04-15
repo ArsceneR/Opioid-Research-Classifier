@@ -8,6 +8,7 @@ __pycache__/
 
 # Ignore virtual environment
 venv/
+.venv/
 .env
 
 # Ignore system files
