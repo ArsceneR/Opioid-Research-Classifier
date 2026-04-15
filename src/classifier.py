@@ -178,7 +178,7 @@ class Classifier:
         logger.info(f"Using classification folder ID: {self.classification_folder_id}")
         
         self.category_folders = { "opioid_related": os.environ.get("OPIOID_RELATED_FOLDER_ID"),
-                                 "neutral_content": os.environ.get("NEUTRAL_CONTENT_FOLDER_ID"),
+                                 "non_opioid_related": os.environ.get("NON_OPIOID_RELATED_FOLDER_ID"),
                                  "error":os.environ.get("ERROR_FOLDER_ID") }
         if not self.category_folders:
             raise ValueError("Category folder IDs not set in environment. Cannot proceed.")
@@ -250,7 +250,7 @@ class Classifier:
                 "intervention",
             ],
 
-            "neutral_content": [
+            "non_opioid_related": [
                 "a natural landscape",
                 "food and drink",
                 "people socializing",
@@ -459,7 +459,7 @@ class Classifier:
         try:
         
             # Use zero-shot classifier with category labels
-            category_labels = ["opioid_related", "neutral_content"]
+            category_labels = ["opioid_related", "non_opioid_related"]
             result = self.text_classifier(caption, category_labels)
             
             # Extract probabilities from result
@@ -472,7 +472,7 @@ class Classifier:
             
             # Ensure both categories are present (default to 0.0 if missing)
             category_probs.setdefault("opioid_related", 0.0)
-            category_probs.setdefault("neutral_content", 0.0)
+            category_probs.setdefault("non_opioid_related", 0.0)
             
             # Calculate confidence as the difference between top 2 probabilities
             sorted_probs = sorted(category_probs.values(), reverse=True)
@@ -486,7 +486,7 @@ class Classifier:
         except Exception as e:
             logger.warning(f"Error classifying text: {e}")
             # Return low confidence to trigger fallback to image classification
-            return ({"opioid_related": 0.5, "neutral_content": 0.5}, 0.5)
+            return ({"opioid_related": 0.5, "non_opioid_related": 0.5}, 0.5)
 
     def _analyze_image(self, image_path: Path):
         """
@@ -534,8 +534,8 @@ class Classifier:
                 with torch.no_grad():
                     logit = self.probe(image_features.float()).squeeze()
                     prob_opioid = torch.sigmoid(logit).item()
-                best_category = "opioid_related" if prob_opioid >= self.probe_threshold else "neutral_content"
-                category_scores = {"opioid_related": prob_opioid, "neutral_content": 1 - prob_opioid}
+                best_category = "opioid_related" if prob_opioid >= self.probe_threshold else "non_opioid_related"
+                category_scores = {"opioid_related": prob_opioid, "non_opioid_related": 1 - prob_opioid}
                 confidence = abs(prob_opioid - self.probe_threshold)
 
                 duration = time.time() - analyze_start_time
@@ -570,8 +570,8 @@ class Classifier:
                 else:
                     best_category = max(category_scores, key=category_scores.get)
                     if confidence < self.image_confidence_threshold:
-                        logger.debug(f"Low image confidence ({confidence:.3f} < {self.image_confidence_threshold:.3f}) for {image_path.name}, defaulting to neutral_content")
-                        best_category = "neutral_content"
+                        logger.debug(f"Low image confidence ({confidence:.3f} < {self.image_confidence_threshold:.3f}) for {image_path.name}, defaulting to non_opioid_related")
+                        best_category = "non_opioid_related"
 
                 duration = time.time() - analyze_start_time
                 logger.info(f"Item {image_path.name} classified via IMAGE as: {best_category} in {duration:.2f}s. Confidence: {confidence:.3f}. (Scores: { {k: f'{v:.3f}' for k, v in category_scores.items()} })")
@@ -772,9 +772,9 @@ def setup_drive_folders(req_parent_folder_id: str = None):
 
 
     CATEGORY_DRIVE_NAMES = {
-        "opioid_related": "Opioid Related",
-        "neutral_content": "Neutral Content",
-        "error": "Processing Errors" # Folder for items that fail processing
+        "opioid_related": "OPIOID_RELATED",
+        "non_opioid_related": "NON_OPIOID_CONTENT",
+        "error": "ERRORS" # Folder for items that fail processing
     }
 
     category_folders = {}
@@ -806,7 +806,7 @@ if modal.is_local() and GDRIVE_PARENT_FOLDER_ID:
     try:
         from dotenv import load_dotenv
         # Check if folder IDs are already set
-        if not os.environ.get("OPIOID_RELATED_FOLDER_ID") or not os.environ.get("NEUTRAL_CONTENT_FOLDER_ID"):
+        if not os.environ.get("OPIOID_RELATED_FOLDER_ID") or not os.environ.get("NON_OPIOID_RELATED_FOLDER_ID"):
             logger.info("Setting up Google Drive folder structure at module level...")
             setup_drive_folders.local(req_parent_folder_id=GDRIVE_PARENT_FOLDER_ID)
             # Reload .env after setup
@@ -834,7 +834,7 @@ def main(drive_parent_id: str = None): # Allow overriding parent ID via CLI flag
 
     # 1. Verify Drive folder setup (setup should have happened at module level)
     logger.info("Step 1: Verifying Google Drive folder structure...")
-    if not os.environ.get("OPIOID_RELATED_FOLDER_ID") or not os.environ.get("NEUTRAL_CONTENT_FOLDER_ID"):
+    if not os.environ.get("OPIOID_RELATED_FOLDER_ID") or not os.environ.get("NON_OPIOID_RELATED_FOLDER_ID"):
         logger.warning("Folder IDs not found, attempting setup now...")
         try:
             setup_drive_folders.local(req_parent_folder_id=parent_id_for_setup)
