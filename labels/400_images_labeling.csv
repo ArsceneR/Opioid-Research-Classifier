@@ -1,0 +1,401 @@
+#,Post-id ,Relevance ,Valence ,Theme,Confidence
+0,C__nSVEvSpU,1,2,prevent opioid overdose,7
+1,C_3Ur6wv1Mg,1,2,"prevent opioid overdose, addiction",10
+2,C_At_07N6Ru,1,2,"prevent opioid overdose, addiction",8
+3,C_cA6hVp65d,1,2,prevent opioid use,8
+4,C_CgeM1OHFM,1,2,"prevent opioid overdose, addiction, use",8
+5,C_dbEIOsph6,1,2,prevent opioid overdose,9
+6,C_g1NJJSfVV,1,2,spread awareness,9
+7,C_G6VBHyHpV,1,2,"spread awareness, getting tested",5
+8,C_goJ-XPTRn,1,2,"spread awareness, getting tested, prevent use",8
+9,C_GWmMIu_Gt,1,2,spread awareness,9
+10,C_io7h3ILDw,1,2,"prevent opioid overdose, addiction, use",10
+11,C_l34vTh5Rl,1,2,spread awareness,8
+12,C_LZKKZpcsJ,1,2,"prevent opioid overdose, addiction, use",10
+13,C_N_-7MRSmZ,1,2,"prevent opioid overdose, addiction, use",9
+14,C_N1dIjB33G,1,2,"spread awareness, getting tested, prevent use",8
+15,C_NuzhFvPDH,1,2,"spread awareness, getting tested, prevent use",7
+16,C_Od6yQycqg,1,2,"spread awareness, getting tested, prevent use",9
+17,C_Oe8IMNDvR,0,1,"spread awareness, getting tested, prevent use",9
+18,C_QMhRWM-Ru,1,2,"spread awareness, getting tested, prevent use",9
+19,C_RHmFlRRV1,1,2,"prevent opioid overdose, addiction, use",8
+20,C_S4Ki5s9oy,1,2,"prevent opioid overdose, addiction, use",9
+21,C_svH2PNFP0,1,2,"prevent opioid overdose, addiction, use",9
+22,C_sYOSiIS3c,0,1,,8
+23,C_T18Uss6U_,1,2,spread awareness,7
+24,C_tDlszqW-v,1,2,spread awareness,8
+25,C_TMxcgtcmY,1,2,prevent opioid overdose,8
+26,C_U7INVBcPS,1,2,"awareness, prevention",8
+27,C_VdCbiMHsL,1,2,"prevent opioid overdose, addiction, use",8
+28,C_vGEjjy-NX,1,2,"prevent opioid overdose, addiction, use",9
+29,C_VjzxrMKR3,1,2,"prevent opioid overdose, addiction, use",9
+30,C_VPPSLMITU,1,2,"prevent opioid overdose, addiction, use",8
+31,C_vrmNpx68P,1,2,"prevent opioid overdose, addiction, use",9
+32,C_y1dM-vWeN,1,2,"prevent opioid overdose, addiction, use",9
+33,C_YdNRkBk0c,1,2,"prevent opioid overdose, addiction, use",9
+34,C_YGWe4u8Bm,1,2,prevent opioid overdose,7
+35,C_ykmHgyVtw,0,1,,9
+36,C-_dV4uhV-a,1,2,prevent opioid overdose,9
+37,C--fjkRtkUJ,1,2,"prevent opioid overdose, addiction, use",9
+38,C--fkESBeBj,1,2,"prevent opioid overdose, addiction, use",9
+39,C--YrT8Mw5z,1,2,"prevent opioid overdose, addiction, use",9
+40,C-1_nzRO3SL,1,2,"prevent opioid overdose, addiction, use",9
+41,C-20jHnN5U-,1,2,spread awareness,9
+42,C-3hL95TtRe,1,2,"prevent opioid overdose, addiction, use",9
+43,C-3MGXpujJF,1,2,"spread awareness, getting tested, prevent use",9
+44,C-5_NafJx6U,1,2,"prevent opioid overdose, addiction, use",9
+45,C-58jCRSi6C,1,2,"prevent opioid overdose, addiction, use",8
+46,C-8oWhGRkLF,1,2,"prevent opioid overdose, addiction, use",8
+47,C-a2RcnzmM7,1,2,"prevent opioid overdose, addiction, use",9
+48,C-a33MQBcwZ,1,2,"prevent opioid overdose, addiction, use",8
+49,C-as4A7Na0i,1,2,"spread awareness, getting tested",8
+50,C-c7FF5O-6w,1,2,"prevent opioid overdose, addiction, use",8
+51,C-Du-BBvroV,1,2,"prevent opioid overdose, addiction, use",8
+52,C-F2zAbO8Ko,1,2,"prevent opioid overdose, addiction, use",8
+53,C-gVmGePNe-,1,2,"spread awareness, getting tested, prevent use",8
+54,C-I29B5OFk5,1,2,"prevent opioid overdose, addiction, use",8
+55,C-jNCGlsj6r,1,2,"prevent opioid overdose, addiction, use",8
+56,C-KtLCMpUd7,1,2,prevent opioid use,8
+57,C-p0AdMNvuB,1,2,prevent opioid use,8
+58,C-p8lfIx0hM,1,2,"prevent opioid overdose, addiction, use",7
+59,C-pyV87q0RY,1,2,"prevent opioid overdose, addiction, use",8
+60,C-RUxRnPyvJ,0,1,,8
+61,C-SgirsOylC,1,2,"prevent opioid overdose, addiction, use",8
+62,C-TbBHIzPXP,1,2,"spread awareness, getting tested, prevent use",8
+63,C-TDgF0zA1z,1,2,"prevent opioid overdose, addiction, use",7
+64,C-TqK3sNypV,1,2,"awareness, prevention",10
+65,C-usas-NjiQ,1,2,"prevent opioid overdose, addiction, use",8
+66,C-vCzj2IPoK,1,2,"prevent opioid overdose, addiction, use",8
+67,C-VhDDWOP_6,1,2,"prevent opioid overdose, addiction, use",7
+68,C-vXX1ipezt,0,1,,8
+69,C-WDeWdBRi3,1,2,"prevent opioid overdose, addiction, use",8
+70,C-WJw70u458,1,2,prevent opioid use,8
+71,C-Xwx0ZM2KI,1,2,spread awareness,8
+72,C-ybmbGi7Iz,1,2,"prevent opioid overdose, addiction, use",8
+73,C-z9m4zuE80,0,1,,8
+74,C1_-tHOr5La,1,2,"prevent opioid overdose, addiction, use",7
+75,C1_2w6GOAXt,1,2,"spread awareness, getting tested, prevent use",9
+76,C1-kbTTI3tf,1,2,"prevent opioid overdose, addiction, use",9
+77,C1051WxOscv,1,2,"prevent opioid overdose, addiction, use",9
+78,C10h4xYOfsM,1,1,"prevent opioid overdose, addiction, use",9
+79,C10hz2KOM6H,1,2,"prevent opioid use, addiction",9
+80,C12o7F-P7uF,1,2,prevent opioid use,8
+81,C14_V1ugo1Q,1,2,prevent opioid use,9
+82,C15_pKptr07,1,2,"prevent opioid overdose, addiction, use",9
+83,C16PZHoIRIg,1,2,"prevent opioid overdose, addiction, use",9
+84,C1kFaQirL_k,0,1,,9
+85,C1mjncWiYgC,1,2,"prevent opioid overdose, addiction, use",6
+86,C1qar9WMJQO,1,2,"prevent opioid overdose, addiction, use",9
+87,C23bUNDLpRN,1,2,"spread awareness, getting tested, prevent use",9
+88,C256Zx0P1nd,1,2,"prevent opioid overdose, addiction, use",9
+89,C293lEaMQo_,1,2,spread awareness,9
+90,C2BhoJ1OG7A,1,2,spread awareness,9
+91,C2BvAdpNJVH,1,2,"prevent opioid overdose, addiction, use",6
+92,C2C97pOsikP,1,2,"prevent opioid overdose, addiction, use",10
+93,C2cnDKTuXAq,0,1,,8
+94,C2czOI-upmm,1,2,"prevent opioid overdose, addiction, use",8
+95,C2fS-UVuT42,1,2,"prevent opioid overdose, addiction, use",8
+96,C2fxASIrmhg,1,2,"prevent opioid overdose, addiction, use",7
+97,C2GL5NMtfOD,1,2,"prevent opioid use, addiction",8
+98,C2K2GeyPnuq,1,2,"prevent opioid overdose, addiction, use",8
+99,C2KbmY0B2Du,1,2,"prevent opioid overdose, addiction, use",8
+100,C2KG3ept-tU,1,2,"prevent opioid overdose, addiction, use",8
+101,C2lFd_kMooR,0,1,,8
+102,C2N_uweyn8N,1,2,"prevent opioid overdose, addiction, use",7
+103,C2nhjLfx2rn,1,2,"prevent opioid overdose, addiction, use",8
+104,C2oC3AEpcpl,1,2,"prevent opioid overdose, addiction, use",8
+105,C2qidE5LFnz,1,2,spread awareness,8
+106,C2sdAVhvcMo,1,2,"prevent opioid overdose, addiction, use",6
+107,C2xKtMCtTKR,1,2,"prevent opioid overdose, addiction, use",8
+108,C3_C_UXSz6b,1,2,"prevent opioid overdose, addiction, use",8
+109,C3-dQoFrwmI,1,2,spread awareness,9
+110,C3-nNSbO249,1,2,"prevent opioid overdose, addiction, use",9
+111,C3-WyM9KZoY,1,2,"prevent opioid overdose, addiction, use",6
+112,C30tDDNv9RK,1,2,"spread awareness, getting tested, prevent use",9
+113,C33ANYgx2YB,1,2,"spread awareness, getting tested, prevent use",9
+114,C33ghI8y0m4,1,2,"prevent opioid overdose, addiction, use",6
+115,C353EkFPffk,1,2,spread awareness,9
+116,C36f0SWNl3o,1,2,"prevent opioid overdose, addiction, use",9
+117,C36lUrcLHHC,1,2,"prevent opioid overdose, addiction, use",9
+118,C37KvyPs_5E,1,2,"prevent opioid overdose, addiction, use",9
+119,C3a87LwPNkm,1,2,"prevent opioid overdose, addiction, use",9
+120,C3dhMVUKQvy,1,2,"spread awareness, getting tested, prevent use",9
+121,C3DXiPxLKJL,1,2,"prevent opioid overdose, addiction, use",10
+122,C3EykB-OUHV,1,2,"prevent opioid overdose, addiction, use",10
+123,C3GDB3IuTmu,1,2,"prevent opioid overdose, addiction, use",9
+124,C3GfAvDMad3,1,2,"spread awareness, getting tested, prevent use",8
+125,C3GR8GuujF_,1,2,"prevent opioid overdose, addiction, use",6
+126,C3iOBItMvAh,0,1,,8
+127,C3kvdnYrmQ8,1,2,"prevent opioid overdose, addiction, use",8
+128,C3MfTaQsAFj,1,2,"prevent opioid overdose, addiction, use",8
+129,C3nglQsrkbH,1,2,"spread awareness, getting tested, prevent use",8
+130,C3NGo_bMlrV,1,2,"prevent opioid overdose, addiction, use",8
+131,C3nqQdWo-jd,1,2,"prevent opioid overdose, addiction, use",8
+132,C3Q-JYNyg-1,1,2,"spread awareness, getting tested, prevent use",8
+133,C3Qbf9ROQTi,1,2,"prevent opioid overdose, addiction, use",8
+134,C3qIGrnuHnX,1,2,"prevent opioid overdose, addiction, use",8
+135,C3tJ-qJvGns,1,2,"prevent opioid overdose, addiction, use",8
+136,C3tL01HLFsJ,1,2,"spread awareness, getting tested, prevent use",7
+137,C3X5CowsN8X,1,2,"prevent opioid overdose, addiction, use",8
+138,C3YXHoqJEIZ,1,2,"prevent opioid overdose, addiction, use",8
+139,C40oyBAPToZ,1,2,"spread awareness, getting tested, prevent use",8
+140,C42_1zIM5GZ,0,1,,8
+141,C43UkFSuAGo,1,2,"prevent opioid overdose, addiction, use",8
+142,C44xblMozXX,1,2,"prevent opioid overdose, addiction, use",8
+143,C48fZWisrSF,1,2,"spread awareness, getting tested, prevent use",10
+144,C4bSohzsmV4,1,2,"prevent opioid overdose, addiction, use",8
+145,C4cb6CXPwFX,1,2,"prevent opioid overdose, addiction, use",8
+146,C4drnXVvqMj,1,2,"spread awareness, getting tested, prevent use",9
+147,C4dXqHRL7JB,1,2,"spread awareness, getting tested, prevent use",8
+148,C4F-BdTNAp9,1,2,"prevent opioid overdose, addiction, use",8
+149,C4ggkQmsKEJ,1,2,"prevent opioid overdose, addiction, use",8
+150,C4gJWSCtnod,1,2,"spread awareness, getting tested, prevent use",8
+151,C4glJyRyUPT,1,2,"spread awareness, getting tested, prevent use",8
+152,C4H9YLQuU84,1,2,"prevent opioid overdose, addiction, use",7
+153,C4HJZjMqaaQ,1,2,"prevent opioid overdose, addiction, use",8
+154,C4inbkDKt7q,1,2,"spread awareness, getting tested, prevent use",8
+155,C4IwXMTOVzo,1,2,"prevent opioid overdose, addiction, use",8
+156,C4jBUgfMiMS,1,2,"prevent opioid overdose, addiction, use",8
+157,C4jIAbiPg-A,1,2,"spread awareness, getting tested, prevent use",8
+158,C4KgFrztWyF,1,2,"prevent opioid overdose, addiction, use",8
+159,C4LmVGHO4kv,1,2,"prevent opioid overdose, addiction, use",8
+160,C4MB2gDoBo5,1,2,"prevent opioid overdose, addiction, use",7
+161,C4O09IJveQH,0,1,,8
+162,C4odS3GK_xe,1,2,"prevent opioid overdose, addiction, use",8
+163,C4OnuklMocu,1,2,"spread awareness, getting tested, prevent use",8
+164,C4p5dqDMt9z,1,2,"prevent opioid overdose, addiction, use",8
+165,C4paY-MM48o,1,2,"prevent opioid overdose, addiction, use",8
+166,C4S1Q1vMkFE,1,2,"spread awareness, getting tested, prevent use",8
+167,C4suANGAAQ2,1,2,"prevent opioid overdose, addiction, use",8
+168,C4tBZPkO1Hj,1,2,"prevent opioid overdose, addiction, use",8
+169,C4vGTo-tTtR,1,2,"prevent opioid overdose, addiction, use",8
+170,C4vkWI4tU6b,1,2,prevent opioid use,8
+171,C4vRgI8PInR,1,2,"prevent opioid overdose, addiction, use",9
+172,C4wnH1YuFLY,1,2,"prevent opioid overdose, addiction, use",9
+173,C4x5tNJIHT9,1,2,prevent opioid use,9
+174,C4yQDHDsQs4,1,2,"prevent opioid overdose, addiction, use",9
+175,C4YwU-nPST5,1,2,"prevent opioid overdose, addiction, use",7
+176,C502URJMCR5,1,2,"prevent opioid overdose, addiction, use",10
+177,C50lxQjren3,1,2,"prevent opioid overdose, addiction, use",9
+178,C50u6KbOCRJ,1,2,"prevent opioid overdose, addiction, use",9
+179,C5185IOOqQH,1,2,"spread awareness, getting tested, prevent use",9
+180,C51kBTNS0N6,1,2,"spread awareness, getting tested, prevent use",9
+181,C51mhJvPUGh,1,2,"prevent opioid overdose, addiction, use",8
+182,C549t4COIYy,1,2,"prevent opioid overdose, addiction, use",8
+183,C54LNhMsELs,1,2,"spread awareness, getting tested, prevent use",8
+184,C55C4cjuG7v,1,2,prevent opioid use,8
+185,C5biMU9ODsT,1,2,prevent opioid use,8
+186,C5bMiZnRwBX,1,2,"prevent opioid overdose, addiction, use",8
+187,C5Bx0dMueM5,0,1,,7
+188,C5EPd1BOKFt,1,2,"prevent opioid overdose, addiction, use",8
+189,C5Eqq1nhByy,1,2,"prevent opioid overdose, addiction, use",8
+190,C5GzhAYLIqw,1,2,"prevent opioid overdose, addiction, use",8
+191,C5jVaSnLzuE,1,2,prevent opioid use,8
+192,C5jYLmNPMWr,1,2,prevent opioid use,9
+193,C5JYq1wONu4,1,2,"prevent opioid overdose, addiction, use",9
+194,C5mbSWFLM83,1,2,spread awareness,8
+195,C5OhTLHsap6,1,2,"prevent opioid overdose, addiction, use",8
+196,C5OmiDRug8J,1,2,"prevent opioid overdose, addiction, use",8
+197,C5rCCKBBLOF,1,2,"prevent opioid overdose, addiction, use",8
+198,C5RqjtRgowY,1,2,"spread awareness, getting tested, prevent use",7
+199,C5RTBm0vjOJ,1,2,"prevent opioid overdose, addiction, use",8
+200,C5TbyZtrXHr,1,2,"prevent opioid overdose, addiction, use",8
+201,C5tu9p7icNN,1,2,spread awareness,10
+202,C5UDO1bhLlT,1,2,spread awareness,9
+203,C5W9-g9vT32,1,2,spread awareness,9
+204,C5y9Af1SnJI,1,2,"prevent opioid overdose, addiction, use",9
+205,C5YMsTUuCCn,1,2,prevent opioid use,9
+206,C5Yyx9CsVMs,1,2,"prevent opioid overdose, addiction, use",8
+207,C6_r_fTKOow,1,2,"spread awareness, getting tested, prevent use",7
+208,C6530gitaJC,1,2,"prevent opioid overdose, addiction, use",8
+209,C65ikdRiirj,1,2,"prevent opioid overdose, addiction, use",8
+210,C65SsiDMZA9,1,2,spread awareness,8
+211,C660gapPSpj,1,2,"prevent opioid overdose, addiction, use",7
+212,C66SzkFs_LN,0,1,,7
+213,C6E8j9ySJAj,0,1,,8
+214,C6eMabxrzdc,1,2,"prevent opioid overdose, addiction, use",9
+215,C6eo0CPMWGB,1,2,"prevent opioid overdose, addiction, use",9
+216,C6EY1BoM7d9,0,1,,8
+217,C6FFfJ1PWjk,1,2,"prevent opioid overdose, addiction, use",8
+218,C6HPG0ZN4rW,1,2,"prevent opioid overdose, addiction, use",8
+219,C6I8DnGRAgS,1,2,"prevent opioid overdose, addiction, use",8
+220,C6jyazppPoi,1,2,"prevent opioid overdose, addiction, use",8
+221,C6LkBgsCgLW,1,2,"prevent opioid overdose, addiction, use",8
+222,C6MSqDJRy0v,1,2,"prevent opioid overdose, addiction, use",8
+223,C6oFEFWs-2O,1,2,"prevent opioid overdose, addiction, use",8
+224,C6OwAdgvzMQ,1,2,prevent opioid use,8
+225,C6r6_ezPKRY,1,2,"prevent opioid overdose, addiction, use",8
+226,C6rs89kyMSG,1,2,"prevent opioid overdose, addiction, use",8
+227,C6rvp5EsqFQ,1,2,"prevent opioid overdose, addiction, use",9
+228,C6tkfsSOXmt,1,2,"prevent opioid overdose, addiction, use",9
+229,C6VaiqeNxTr,1,2,prevent opioid use,9
+230,C6wIIPlsCBx,1,2,prevent opioid use,9
+231,C6Wleess2W2,1,2,prevent opioid use,9
+232,C6wlSikOOqu,1,2,"prevent opioid overdose, addiction, use",9
+233,C6xTaeBrSDC,1,2,"prevent opioid overdose, addiction, use",10
+234,C6Zz6iKRdcc,1,2,"spread awareness, getting tested, prevent use",10
+235,C70iYMUNwpf,1,2,"prevent opioid overdose, addiction, use",9
+236,C764cEMx99I,1,2,"prevent opioid overdose, addiction, use",9
+237,C77A16gInKS,1,2,"spread awareness, getting tested, prevent use",9
+238,C78_Cg4tuX7,1,2,"prevent opioid overdose, addiction, use",8
+239,C7A6glZRAVJ,0,2,,8
+240,C7BjVaxtjKN,1,2,"prevent opioid overdose, addiction, use",8
+241,C7CXZCEimTG,1,2,"prevent opioid overdose, addiction, use",8
+242,C7ElnJ5Oac5,1,2,"spread awareness, getting tested, prevent use",8
+243,C7ezApisL7h,1,2,"prevent opioid overdose, addiction, use",8
+244,C7fBxqtR8PQ,1,2,"prevent opioid overdose, addiction, use",8
+245,C7INj92ByPH,1,2,"prevent opioid overdose, addiction, use",8
+246,C7jxMWltzEJ,1,2,spread awareness,8
+247,C7K8M7vrN_7,1,2,spread awareness,8
+248,C7PzeN9AuV9,1,2,"prevent opioid overdose, addiction, use",9
+249,C7R0JMQMZBX,1,2,"prevent opioid overdose, addiction, use",9
+250,C7U0di9JPq3,1,2,"spread awareness, getting tested, prevent use",10
+251,C7U7RkLNiit,1,2,"spread awareness, getting tested, prevent use",9
+252,C7UTjuBNXUS,1,2,"prevent opioid overdose, addiction, use",9
+253,C7UXS4ItSN9,1,2,prevent opioid use,9
+254,C7uZnnLR7AH,1,2,"prevent opioid overdose, addiction, use",9
+255,C7W_3GhpL1d,1,2,"prevent opioid overdose, addiction, use",9
+256,C7xCREfuLWi,1,2,"prevent opioid overdose, addiction, use",9
+257,C7XEmfdRRuE,1,2,prevent opioid use,10
+258,C7y92q0qlNx,1,2,"prevent opioid overdose, addiction, use",9
+259,C7Z-CRFpsNv,1,2,"prevent opioid overdose, addiction, use",8
+260,C7zdiMqvw9m,1,2,prevent opioid use,8
+261,C81mglfOUHM,1,2,"prevent opioid overdose, addiction, use",8
+262,C874LBoNguh,1,2,prevent opioid use,9
+263,C8AJ5ZGS2Si,1,2,"prevent opioid overdose, addiction, use",8
+264,C8BbW3xoA4K,1,2,"prevent opioid overdose, addiction, use",8
+265,C8c5nTvp60R,1,2,prevent opioid use,8
+266,C8Ce4TExMQb,1,2,prevent opioid use,9
+267,C8ChibmS5DT,1,2,"prevent opioid overdose, addiction, use",9
+268,C8eVMKdxD0k,1,2,spread awareness,8
+269,C8FmmjWS5qd,1,2,"prevent opioid overdose, addiction, use",8
+270,C8fxdaLsJ_C,1,2,"prevent opioid overdose, addiction, use",8
+271,C8ITpPLxkPJ,1,2,"prevent opioid overdose, addiction, use",8
+272,C8KdnuNPRaj,1,2,spread awareness,8
+273,C8Kdow0sVy9,1,2,"prevent opioid overdose, addiction, use",8
+274,C8KWwtmN8vB,1,2,"prevent opioid overdose, addiction, use",8
+275,C8KZvk5I3nA,1,2,spread awareness,8
+276,C8LcCvjo_C8,1,2,"prevent opioid overdose, addiction, use",8
+277,C8Nd3SqiWaZ,1,2,"spread awareness, getting tested, prevent use",8
+278,C8pejF1PcQh,1,2,"prevent opioid overdose, addiction, use",8
+279,C8pmCr8vPGR,1,2,prevent opioid use,8
+280,C8pO4nWym5q,1,2,"spread awareness, getting tested, prevent use",8
+281,C8qKoSgtTUs,1,2,"prevent opioid overdose, addiction, use",8
+282,C8rLWMgA1vT,1,2,"prevent opioid overdose, addiction, use",8
+283,C8rvraluqrj,1,2,"prevent opioid overdose, addiction, use",9
+284,C8Udpneupry,1,2,spread awareness,9
+285,C8UK4wAsBao,1,2,spread awareness,10
+286,C8uqgbeuIxq,1,2,"prevent opioid overdose, addiction, use",10
+287,C8Uw4RYsycP,1,2,"prevent opioid overdose, addiction, use",9
+288,C94yykpu1TI,1,2,"prevent opioid overdose, addiction, use",9
+289,C951BVkq_ml,1,2,"prevent opioid overdose, addiction, use",9
+290,C976di_P_tV,0,1,,9
+291,C9c26MWMa-a,1,2,"prevent opioid overdose, addiction, use",9
+292,C9c87f9BHVT,1,2,"spread awareness, getting tested, prevent use",9
+293,C9cmpzOOdtQ,1,2,"prevent opioid overdose, addiction, use",8
+294,C9CXDzcIosH,1,2,"prevent opioid overdose, addiction, use",8
+295,C9DAQwSP9Yh,1,2,prevent opioid use,8
+296,C9DOBiLOK7Z,1,2,prevent opioid use,8
+297,C9DpkvVPfR_,1,2,"prevent opioid overdose, addiction, use",8
+298,C9eaOlvoRg0,1,2,"prevent opioid overdose, addiction, use",8
+299,C9FjF9pPrdI,1,2,"prevent opioid overdose, addiction, use",8
+300,C9KTL-rB59M,1,2,"spread awareness, getting tested, prevent use",8
+301,C9Kyd7fu8PW,1,2,"prevent opioid overdose, addiction, use",8
+302,C9LGbFTJG1g,1,2,"prevent opioid overdose, addiction, use",8
+303,C9mw_6nu2il,1,2,"prevent opioid overdose, addiction, use",8
+304,C9nUfbExsHt,1,2,"spread awareness, getting tested, prevent use",8
+305,C9nUuuZN6hE,1,2,"prevent opioid overdose, addiction, use",8
+306,C9ODeaei-WP,1,2,"prevent opioid overdose, addiction, use",9
+307,C9PsKZepUEn,1,2,"prevent opioid overdose, addiction, use",9
+308,C9QE3CLOQJm,1,2,"spread awareness, getting tested, prevent use",10
+309,C9sw-b4PqG8,1,2,"prevent opioid overdose, addiction, use",8
+310,C9SZYNUsSFf,1,2,prevent opioid use,8
+311,C9uY09AR9pn,1,2,prevent opioid use,8
+312,C9veafLSZXr,1,2,"prevent opioid overdose, addiction, use",9
+313,C9vTODBvaEi,1,2,"prevent opioid overdose, addiction, use",9
+314,C9xdcKFJ1i3,1,2,"prevent opioid overdose, addiction, use",9
+315,DA0omvMNFnT,1,2,"spread awareness, getting tested, prevent use",9
+316,DA3aD4FiNbn,1,2,"spread awareness, getting tested, prevent use",9
+317,DA88174P7ml,1,2,"prevent opioid overdose, addiction, use",9
+318,DA8BRqJPy-t,1,2,"prevent opioid overdose, addiction, use",9
+319,DABHvaDNfkm,1,2,"prevent opioid overdose, addiction, use",9
+320,DAbMKihNqQv,1,2,"prevent opioid overdose, addiction, use",9
+321,DACPY-CMB8l,1,2,"prevent opioid overdose, addiction, use",9
+322,DAD6PKNojJZ,1,2,"prevent opioid overdose, addiction, use",8
+323,DAfzYhrq9uy,1,2,"prevent opioid overdose, addiction, use",8
+324,DAgZ01WpSkz,1,2,"spread awareness, getting tested, prevent use",8
+325,DAJI1RYMVAx,1,2,"prevent opioid overdose, addiction, use",8
+326,DAjOEE0R0Q_,1,2,"prevent opioid overdose, addiction, use",9
+327,DAJSXTvRyot,1,2,"prevent opioid overdose, addiction, use",9
+328,DAoUUJQPJWT,1,2,"spread awareness, getting tested, prevent use",9
+329,DARvTqEyURF,1,2,"prevent opioid overdose, addiction, use",9
+330,DAWbstaNr2D,1,2,prevent opioid use,9
+331,DAXpjSGt8OH,1,2,"prevent opioid overdose, addiction, use",9
+332,DAYg7GpCgT8,1,2,"prevent opioid overdose, addiction, use",9
+333,DAZ4DXrS45a,1,2,"spread awareness, getting tested, prevent use",9
+334,DB-doYMocNJ,1,2,"prevent opioid overdose, addiction, use",9
+335,DB-GaVlsgDP,1,2,"prevent opioid overdose, addiction, use",8
+336,DB07yekxClU,1,2,"prevent opioid overdose, addiction, use",8
+337,DB1iSsvPDAd,1,2,"spread awareness, getting tested, prevent use",8
+338,DB1mNLSyswg,1,2,"prevent opioid overdose, addiction, use",8
+339,DB37422O6tl,1,2,"prevent opioid overdose, addiction, use",8
+340,DB395kQOzeq,1,2,prevent opioid use,8
+341,DB7EFU-Ru6a,1,2,prevent opioid use,8
+342,DB9E_4iPX28,1,2,"prevent opioid overdose, addiction, use",9
+343,DBbpjU_JUBl,1,2,"prevent opioid overdose, addiction, use",8
+344,DBHjQ3wtHfm,1,2,"spread awareness, getting tested, prevent use",9
+345,DBhNOr7Pj2x,1,2,"prevent opioid overdose, addiction, use",9
+346,DBHSZ9qT1RT,1,2,"prevent opioid overdose, addiction, use",8
+347,DBjn5BDpGdO,1,2,"prevent opioid overdose, addiction, use",8
+348,DBJrUMFs3MU,1,2,"spread awareness, getting tested, prevent use",8
+349,DBjwIA1vQtI,1,2,"spread awareness, getting tested, prevent use",9
+350,DBKQpvnIkq8,1,2,"spread awareness, getting tested, prevent use",9
+351,DBMNuPURAAg,1,2,"prevent opioid overdose, addiction, use",9
+352,DBoTGR2SFv3,1,2,"prevent opioid overdose, addiction, use",8
+353,DBOzTlhPxMd,1,2,"prevent opioid overdose, addiction, use",8
+354,DBqviidJMW9,1,2,"prevent opioid overdose, addiction, use",8
+355,DBUiP9RNTu6,1,2,"prevent opioid overdose, addiction, use",8
+356,DBumZwOPeel,1,2,"prevent opioid overdose, addiction, use",8
+357,DBwKgkEiMod,1,2,"prevent opioid overdose, addiction, use",8
+358,DBwLX-sSl3H,1,2,"prevent opioid overdose, addiction, use",10
+359,DC20lk9NGGt,1,2,"prevent opioid overdose, addiction, use",10
+360,DC7DKDAo4j8,1,2,prevent opioid use,8
+361,DC7zOpvvljE,1,2,"prevent opioid overdose, addiction, use",8
+362,DC99rMRMIy8,1,2,"prevent opioid overdose, addiction, use",8
+363,DCBJkBxvpNw,1,2,"prevent opioid overdose, addiction, use",9
+364,DCemNleOb3J,1,2,prevent opioid use,9
+365,DCFi3vyJev3,1,2,"prevent opioid overdose, addiction, use",9
+366,DCfMmRaBV4R,1,2,"prevent opioid overdose, addiction, use",9
+367,DChiZsaJLwL,1,2,"prevent opioid overdose, addiction, use",9
+368,DCHjV0HNJk5,1,2,"prevent opioid overdose, addiction, use",9
+369,DChMW31ob42,1,2,"prevent opioid overdose, addiction, use",9
+370,DCHXt8vpRjd,1,2,"spread awareness, getting tested, prevent use",9
+371,DCI1uh-KU5O,1,2,"prevent opioid overdose, addiction, use",9
+372,DCPG_wmRWxc,1,2,"prevent opioid overdose, addiction, use",9
+373,DCukXbgTcA-,1,2,"spread awareness, getting tested, prevent use",8
+374,DCUMbtiJ7_Q,1,2,"prevent opioid overdose, addiction, use",8
+375,DCUsEqHSAhr,1,2,"prevent opioid overdose, addiction, use",8
+376,DCVSHLXMQ1S,1,2,"prevent opioid overdose, addiction, use",8
+377,DCWrozPg3bi,1,2,"spread awareness, getting tested, prevent use",8
+378,DCXLMDJsNwD,1,2,"prevent opioid overdose, addiction, use",8
+379,DCy6bbNuXte,1,2,"prevent opioid overdose, addiction, use",8
+380,DCz2Pw4gzPP,1,2,"prevent opioid overdose, addiction, use",8
+381,DD17J9nOyfC,1,2,"prevent opioid overdose, addiction, use",8
+382,DD8xJp6sOnM,1,2,"prevent opioid overdose, addiction, use",8
+383,DDghWjvRecF,1,2,"prevent opioid overdose, addiction, use",8
+384,DDH72vtvvwJ,1,2,"prevent opioid overdose, addiction, use",8
+385,DDi2l5EsyKY,1,2,"prevent opioid overdose, addiction, use",10
+386,DDIaACvpTFx,1,2,"prevent opioid overdose, addiction, use",10
+387,DDIvdtFyB-e,1,2,"prevent opioid overdose, addiction, use",8
+388,DDORCb6oQwK,1,2,"prevent opioid overdose, addiction, use",8
+389,DDqEjjxPAEh,1,2,"spread awareness, getting tested, prevent use",8
+390,DDQLzCWTxG4,1,2,prevent opioid use,8
+391,DDrdvyBNqKG,1,2,"prevent opioid overdose, addiction, use",8
+392,DDU6VORR9HT,1,2,"prevent opioid overdose, addiction, use",8
+393,DDUlihxJuEP,1,2,"prevent opioid overdose, addiction, use",9
+394,DDuVh_0zCIO,1,2,prevent opioid use,9
+395,DDv5GuazZeO,1,2,"prevent opioid overdose, addiction, use",9
+396,DDw7qqFpXpk,1,2,"prevent opioid overdose, addiction, use",8
+397,DDxB43LtacB,1,2,"spread awareness, getting tested, prevent use",8
+398,DDzRLNsNlUw,1,2,"spread awareness, getting tested, prevent use",8
+399,DENVvRkMFih,1,2,"spread awareness, getting tested, prevent use",9

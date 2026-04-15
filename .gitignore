@@ -29,7 +29,7 @@ service_account.json
 # Ignore Claude project context
 .claude/
 
-*.csv
+
 Opioid_Related*/
 
 *.xlsx
