@@ -18,8 +18,8 @@ logger = logging.getLogger(__name__)
 
 # Paths
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-FINETUNING_DIR = Path("/Users/arscenerubayita/Documents/Personal_Programming/Instagram_Scrape_and_Store/300_images_(fine_tuning)")
-CSV_PATH = PROJECT_ROOT / "Excel_With_IDs(Sheet1).csv"
+FINETUNING_DIR = PROJECT_ROOT / "300_images_(fine_tuning)"
+CSV_PATH = PROJECT_ROOT / "400_images_labeling.csv"
 OUTPUT_PATH = PROJECT_ROOT / "src" / "probe_weights.pt"
 
 CONTAINER_DATA_DIR = Path("/data/images")
