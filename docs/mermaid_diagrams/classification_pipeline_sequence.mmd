@@ -17,7 +17,7 @@ sequenceDiagram
     Main->>Setup: setup_drive_folders.local(parent_id)
     Setup->>GDrive: create_drive_folder(ROOT_FOLDER_NAME)
     GDrive-->>Setup: root folder ID
-    loop for each category<br/>(opioid_related, neutral_content, error)
+    loop for each category<br/>(opioid_related, non_opioid_related, error)
         Setup->>GDrive: create_drive_folder(category, root_id)
         GDrive-->>Setup: category folder ID
         Setup->>FS: append *_FOLDER_ID to .env
@@ -71,7 +71,7 @@ sequenceDiagram
 
             opt caption present
                 C->>C: strip #hashtags, normalize whitespace
-                C->>TXT: classify(caption,<br/>["opioid_related","neutral_content"])
+                C->>TXT: classify(caption,<br/>["opioid_related","non_opioid_related"])
                 TXT-->>C: {labels, scores}
                 C->>C: confidence = top1 - top2
 
@@ -90,14 +90,14 @@ sequenceDiagram
                 C->>Probe: probe(image_features.float())
                 Probe-->>C: logit
                 C->>C: prob_opioid = sigmoid(logit)
-                C->>C: category = prob_opioid ≥ probe_threshold<br/>? opioid_related : neutral_content
+                C->>C: category = prob_opioid ≥ probe_threshold<br/>? opioid_related : non_opioid_related
                 C-->>C: return (category, "image")
             else zero-shot prompt matching
                 C->>C: logits = temp * image_features @ text_features.T
                 C->>C: per-category mean logit → softmax
                 C->>C: confidence = top1 - top2
                 opt confidence < CLIP_CONFIDENCE_THRESHOLD
-                    C->>C: override → neutral_content
+                    C->>C: override → non_opioid_related
                 end
                 C-->>C: return (category, "image")
             end

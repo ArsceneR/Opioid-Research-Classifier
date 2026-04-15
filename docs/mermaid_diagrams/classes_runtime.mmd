@@ -1,0 +1,93 @@
+%% Runtime class diagram for src/classifier.py
+%% Shows the Classifier Modal class, its collaborators, and the module-level
+%% functions that orchestrate the pipeline.
+classDiagram
+    direction LR
+
+    class Classifier {
+        <<@app.cls L40S>>
+        +str classification_folder_id
+        +dict~str,str~ category_folders
+        +float image_confidence_threshold
+        +float text_confidence_threshold
+        +float temperature
+        +dict~str,list~ CATEGORIES
+        +list~str~ ALL_PROMPTS
+        +list~str~ PROMPT_TO_CATEGORY_MAP
+        +str device
+        +bool use_probe
+        +float probe_threshold
+        +Tensor text_features
+        +start()
+        +process_item(item_dir_name) dict
+        -_read_caption(image_path) str
+        -_classify_text(caption) tuple
+        -_analyze_image(image_path) tuple
+    }
+
+    class CLIPModel {
+        <<frozen ViT-L/14>>
+        +encode_image(Tensor) Tensor
+        +encode_text(Tensor) Tensor
+        +preprocess(PIL) Tensor
+    }
+
+    class LinearProbe {
+        <<torch.nn.Linear 768 to 1>>
+        +Tensor weight
+        +Tensor bias
+        +forward(features) Tensor
+    }
+
+    class ZeroShotTextClassifier {
+        <<HF pipeline>>
+        +str model_id
+        +__call__(text, labels) dict
+    }
+
+    class DriveService {
+        <<googleapiclient>>
+        +files() Resource
+    }
+
+    class ModalApp {
+        <<modal.App>>
+        +Image image
+        +cls() decorator
+        +function() decorator
+        +local_entrypoint() decorator
+    }
+
+    class create_drive_folder {
+        <<module function>>
+        +call(service, name, parent) tuple
+    }
+
+    class upload_to_drive {
+        <<module function>>
+        +call(service, folder_id, path) bool
+    }
+
+    class setup_drive_folders {
+        <<@app.function>>
+        +call(parent_id) dict
+    }
+
+    class main {
+        <<@local_entrypoint>>
+        +call(drive_parent_id) void
+    }
+
+    Classifier *-- CLIPModel : holds self.model
+    Classifier o-- LinearProbe : optional self.probe
+    Classifier *-- ZeroShotTextClassifier : holds self.text_classifier
+    Classifier *-- DriveService : holds self.drive_service
+    Classifier ..> create_drive_folder : uses
+    Classifier ..> upload_to_drive : uses
+    ModalApp ..> Classifier : registers
+    ModalApp ..> setup_drive_folders : registers
+    ModalApp ..> main : registers
+    main ..> setup_drive_folders : invokes
+    main ..> Classifier : instantiates and .map()
+    setup_drive_folders ..> create_drive_folder : uses
+    setup_drive_folders ..> DriveService : builds local client

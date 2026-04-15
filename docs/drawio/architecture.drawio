@@ -327,7 +327,7 @@
         <mxCell id="eval_output" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=13;fontStyle=2;" value="classifier_evaluation.xlsx" vertex="1">
           <mxGeometry height="35" width="220" x="1960" y="305" as="geometry" />
         </mxCell>
-        <mxCell id="human_labels" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=13;" value="Human Labels&lt;br&gt;&lt;i&gt;Excel_With_IDs CSV (300)&lt;br&gt;Coding Sheet CSV (100)&lt;/i&gt;" vertex="1">
+        <mxCell id="human_labels" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=13;" value="Human Labels&lt;br&gt;&lt;i&gt;400_images_labeling.csv (300)&lt;br&gt;100_testing_images_labels.csv (100)&lt;/i&gt;" vertex="1">
           <mxGeometry height="60" width="360" x="-750" y="350" as="geometry" />
         </mxCell>
         <mxCell id="legend_frame" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#999999;strokeWidth=1;dashed=1;" value="" vertex="1">

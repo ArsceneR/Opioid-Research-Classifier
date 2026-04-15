@@ -1,0 +1,108 @@
+%% Domain/data class diagram for the classification pipeline.
+%% Covers the entities that flow through the system: inputs (post
+%% directories + human labels), intermediate artifacts (probe weights),
+%% and outputs (classification results + Drive folders).
+classDiagram
+    direction TB
+
+    class PostDirectory {
+        <<pipeline input>>
+        +str post_id
+        +Path image_file
+        +Path caption_file
+        +list~Path~ other_files
+    }
+
+    class FineTuningLabel {
+        <<400_images_labeling.csv>>
+        +str Post-id
+        +int Relevance
+        +int Valence
+        +str Theme
+        +int Confidence
+    }
+
+    class TestingLabel {
+        <<100_testing_images_labels.csv>>
+        +str Post-id
+        +int Relevance
+        +int Valence
+        +str Theme
+        +int Confidence
+    }
+
+    class TextClassificationOutput {
+        <<_classify_text>>
+        +dict~str,float~ category_probs
+        +float confidence
+    }
+
+    class ImageClassificationOutput {
+        <<_analyze_image>>
+        +str category
+        +str classification_method
+    }
+
+    class ClassificationResult {
+        <<process_item return>>
+        +str item
+        +str status
+        +str category
+        +str classification_method
+        +int files_found
+        +int uploads_successful
+        +int upload_errors
+        +float duration_seconds
+    }
+
+    class ProbeWeights {
+        <<src/probe_weights.pt>>
+        +OrderedDict weights
+        +float threshold
+        +dict cv_metrics
+    }
+
+    class DriveFolder {
+        <<Google Drive>>
+        +str folder_id
+        +str name
+        +str parent_id
+    }
+
+    class Category {
+        <<enumeration>>
+        opioid_related
+        non_opioid_related
+        error
+    }
+
+    class ClassificationMethod {
+        <<enumeration>>
+        text
+        image
+        error
+    }
+
+    class RunStatus {
+        <<enumeration>>
+        processed
+        processed_with_errors
+        skipped
+        skipped_exist
+        error
+        framework_error
+    }
+
+    PostDirectory "1" --> "0..1" FineTuningLabel : paired by post_id
+    PostDirectory "1" --> "0..1" TestingLabel : paired by id
+    PostDirectory --> TextClassificationOutput : caption produces
+    PostDirectory --> ImageClassificationOutput : image produces
+    TextClassificationOutput --> ImageClassificationOutput : falls through when<br/>confidence low
+    ImageClassificationOutput --> ClassificationResult : wrapped in
+    ClassificationResult --> Category : category
+    ClassificationResult --> ClassificationMethod : classification_method
+    ClassificationResult --> RunStatus : status
+    ClassificationResult --> DriveFolder : uploaded to
+    DriveFolder --> Category : maps 1:1
+    FineTuningLabel ..> ProbeWeights : train_probe.py trains
+    ProbeWeights ..> ImageClassificationOutput : probe branch reads
