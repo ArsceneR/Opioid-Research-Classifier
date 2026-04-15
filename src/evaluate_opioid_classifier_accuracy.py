@@ -7,20 +7,13 @@ and specificity.
 """
 
 import pandas as pd
-from pathlib import Path
 import logging
 
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 logger = logging.getLogger(__name__)
 
 
-def main():
-    # excel_path = Path("/Users/arscenerubayita/Documents/Personal_Programming/Instagram_Scrape_and_Store/Coding Sheet_n=100(Sheet1).csv") #human labeled source of truth
-
-    excel_path = Path("/Users/arscenerubayita/Documents/Personal_Programming/Instagram_Scrape_and_Store/Excel_With_IDs(Sheet1).csv") #human labeled source of truth
-    opioid_dir = Path("/Users/arscenerubayita/Downloads/Opioid_Related_100_post_finetuning") #machine classified opioid_related posts
-    neutral_dir = Path("/Users/arscenerubayita/Downloads/Neutral_Content_100_post_finetuning") #machine classified neutral posts
-
+def main(excel_path, opioid_dir, non_opioid_dir):
     # Load CSV with id and relevance columns
     df = pd.read_csv(excel_path)
     logger.info(f"CSV columns: {list(df.columns)}")
@@ -60,11 +53,11 @@ def main():
     else:
         logger.warning(f"Opioid directory not found: {opioid_dir}")
 
-    if neutral_dir.exists():
-        clip_neutral_ids = {d.name for d in neutral_dir.iterdir() if d.is_dir()}
-        logger.info(f"Found {len(clip_neutral_ids)} folders in neutral_content")
+    if non_opioid_dir.exists():
+        clip_neutral_ids = {d.name for d in non_opioid_dir.iterdir() if d.is_dir()}
+        logger.info(f"Found {len(clip_neutral_ids)} folders in non_opioid_related")
     else:
-        logger.warning(f"Neutral directory not found: {neutral_dir}")
+        logger.warning(f"Non-Opioid directory not found: {non_opioid_dir}")
 
     if not clip_opioid_ids and not clip_neutral_ids:
         logger.error("No prediction folders found!")
