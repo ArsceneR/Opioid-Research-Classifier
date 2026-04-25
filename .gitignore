@@ -1,5 +1,5 @@
 # Ignore the directory where downloaded files are stored
-my_files/
+data/
 
 # Ignore Python cache files
 __pycache__/
@@ -18,7 +18,6 @@ venv/
 ConversationStreamDistribution/
 
 #ignore downloaded files with specific extensions
-*.txt
 *.jpg
 *.jpg*
 *.xz
