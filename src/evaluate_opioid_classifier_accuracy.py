@@ -13,7 +13,14 @@ logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 logger = logging.getLogger(__name__)
 
 
-def main(excel_path, opioid_dir, non_opioid_dir):
+def evaluate(excel_path, opioid_dir, non_opioid_dir):
+    """_summary_
+
+    Args:
+        excel_path (str): Path to CSV file with human labels (id, relevance)
+        opioid_dir (str): Path to folder with classifier-predicted opioid-related posts
+        non_opioid_dir (str): Path to folder with classifier-predicted neutral posts
+    """
     # Load CSV with id and relevance columns
     df = pd.read_csv(excel_path)
     logger.info(f"CSV columns: {list(df.columns)}")
@@ -225,4 +232,4 @@ def main(excel_path, opioid_dir, non_opioid_dir):
 
 
 if __name__ == '__main__':
-    main()
+    evaluate()
