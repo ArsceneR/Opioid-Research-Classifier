@@ -1,0 +1,52 @@
+
+  flowchart TD                                                                                                                                 
+      %% ============================================================
+      %% Linear probe training pipeline (src/train_probe.py)                                                                                   
+      %% Frozen CLIP backbone + trainable Linear(768->1) head                                                                                  
+      %% ============================================================
+                                                                                                                                               
+      subgraph PHASE1["Phase 1: Data prep"];                                                                                                  
+          A[("300 images<br/>labels CSV")] --> B["Pair subfolder to label<br/>by post shortcode"]
+          B --> C["CLIP ViT-L/14 encode_image<br/>+ L2-normalize -> 768-dim"]                                                                  
+          C --> D[/"X: N x 768, y: N"/]                                                                                                        
+      end                                                                                                                                      
+                                                                                                                                               
+      subgraph PHASE2["Phase 2: Stratified 5-fold CV"];                                                                                        
+          D --> E["Split indices, preserving<br/>class ratio (seed=42)"]
+          E --> F{{"For each fold k = 1..5"}}                                                                                                  
+                       
+          F --> G["Train Linear(768,1)<br/>on the other 4 folds"]                                                                              
+          G --> H["Eval every 10 epochs<br/>checkpoint best specificity"]
+          H --> I{{"Patience 50 hit?"}}                                                                                                        
+          I -- no --> G                                                                                                                        
+          I -- yes --> J["Restore best weights"]
+                                                                                                                                               
+          J --> K["Sweep threshold 0.05-0.90<br/>on TRAIN split"]                                                                              
+          K --> L["Pick t* : max specificity<br/>s.t. recall >= 0.90"]
+          L --> M["Score held-out fold<br/>P / R / Spec / F1"]                                                                                 
+          M --> F                                                                                                                              
+      end
+                                                                                                                                               
+      subgraph PHASE3["Phase 3: Final model"]
+          F ==> N["Average 5-fold metrics<br/>= honest performance"]
+          N --> O["Retrain probe on ALL 300<br/>(same loss and optimizer)"]                                                                    
+          O --> P["Sweep threshold on full data<br/>(in-sample, optimistic)"]
+          P --> Q[("probe_weights.pt:<br/>weights, threshold, cv_metrics")]                                                                    
+      end                                                                                                                                      
+                                                                                                                                               
+      %% Annotations on the training node                                                                                                      
+      G -.-> NOTE1["loss = class-weighted BCE"]
+      G -.-> NOTE2["optimizer = Adam (lr=1e-3, wd=1e-4)"]                                                                                      
+   
+      classDef data fill:#e8f4f8,stroke:#2980b9,color:#1b4f72                                                                                  
+      classDef train fill:#fef5e7,stroke:#d68910,color:#7e5109
+      classDef eval fill:#eafaf1,stroke:#27ae60,color:#1e8449                                                                                  
+      classDef out fill:#f4ecf7,stroke:#7d3c98,color:#512e5f                                                                                   
+      classDef note fill:#fdfdfd,stroke:#999,color:#555,stroke-dasharray: 3 3                                                                  
+                                                                                                                                               
+      class A,B,C,D data;                                                                                                                       
+      class G,H,I,J,O train;                                                                                                                    
+      class K,L,M,N,P eval
+      class Q out;                                                                                                                            
+      class NOTE1,NOTE2 note
+                                                        
